@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Business Documents — AH Consultancy</title><link href="Media/logo.png" rel="icon"/><link href="styles.css" rel="stylesheet"/><link href="responsive.css" rel="stylesheet"/><style>
+/* === FIXES (anchor offset, padding, borders, promo, pointers) === */
+#services{scroll-margin-top:120px}
+.tile{padding:12px}
+.form input,.form textarea{border:4px solid rgba(191,161,57,.55);border-radius:12px;background:rgba(255,255,255,.75)}
+textarea{resize:none;overflow:auto}
+.promo{width:100vw;margin-left:calc(50% - 50vw);z-index:50}
+.top{z-index:60}
+.hero-preview,.preview,.overlay{pointer-events:none}
+/* === Lightbox styles === */
+.lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);padding:24px;z-index:9999}
+.lightbox.open{display:flex}
+.lb-inner{position:relative;background:#fff;border-radius:16px;box-shadow:0 24px 64px rgba(0,0,0,.3);max-width:min(980px,92vw);width:100%;padding:16px}
+.lb-media{width:100%;aspect-ratio:16/9;background:#000 center/contain no-repeat;border-radius:12px}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:4px solid rgba(191,161,57,.55);border-radius:12px;width:48px;height:48px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);font-size:28px;line-height:1}
+.lb-prev{left:12px}.lb-next{right:12px}
+.lb-close{position:absolute;top:10px;right:14px;background:#fff;border:4px solid rgba(191,161,57,.55);border-radius:10px;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);font-size:22px;line-height:1}
+/* === Reviews viewport === */
+.reviews .rev-viewport{position:relative;overflow:hidden;padding:0 60px}
+.reviews .rev-track{display:flex;gap:24px;transition:transform .5s ease}
+.reviews .rev{flex:0 0 72%;background:rgba(255,255,255,.66);border:4px solid rgba(191,161,57,.55);border-radius:16px;padding:18px;box-shadow:0 12px 32px rgba(16,24,40,.08);opacity:.55;transform:scale(.96);transition:opacity .3s,transform .3s}
+.reviews .rev.active{opacity:1;transform:scale(1)}
+.reviews .rev-ctrl{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:4px solid rgba(191,161,57,.55);width:44px;height:44px;border-radius:12px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);z-index:2}
+.reviews .rev-prev{left:8px}.reviews .rev-next{right:8px}
+</style></head><header class="top">
+<div class="wrap top-inner">
+<a class="brand" href="index.html">
+<img alt="AH Consultancy" class="brand-logo" src="Media/logo.png"/>
+<span class="btext"><strong>AH Consultancy</strong><em>Independent Creator &amp; Operator</em></span>
+</a>
+<nav class="nav">
+<a href="index.html#services">Services</a>
+<a href="about.html">About</a>
+<a class="btn small" href="contact.html">Contact</a>
+</nav>
+</div>
+</header>
+<main class="wrap section">
+<h1>Business Documents</h1>
+<p>Business Documents provide ready‑to‑use templates for everyday operations — proposals, policies, and internal guides — designed to look consistent and feel professional.</p>
+<p>Reusable, brand‑ready document packs: proposals, contracts, SOPs, and internal checklists. You’ll get fill‑in‑the‑blanks versions plus examples, so anyone on your team can use them right away.</p>
+<h3>Why it matters</h3>
+<p>Templates create consistency. They speed up drafting, reduce errors, and make approvals faster across your business.</p>
+<ul>
+<li>Create consistent, branded materials quickly.</li>
+<li>Simplify day‑to‑day admin and approvals.</li>
+<li>Reduce errors through clear, standardised formats.</li>
+<li>Present your business professionally every time.</li>
+</ul>
+<h3>Portfolio</h3>
+<p>Due to the service type a portfolio can not be shown</p>
+<p></p>
+</main>
+<footer class="site-foot">
+<div class="wrap foot-grid">
+<small>© 2025 Adrian Headley</small>
+<ul class="icons">
+<li><a class="icon-btn" href="contact.html" title="Email">✉</a></li>
+<li><a class="icon-btn" href="https://www.linkedin.com" target="_blank">in</a></li>
+<li><a class="icon-btn" href="https://x.com" target="_blank">𝕏</a></li>
+</ul>
+</div>
+</footer>
+<script defer="" src="main.js"></script>
+<!-- PORTFOLIO LIGHTBOX (injected) -->
+<script>
+(function(){
+  if (window.__LB_INJECTED__) return; // prevent double-inject
+  window.__LB_INJECTED__ = true;
+
+  const lb = document.createElement('div');
+  lb.className = 'lb-backdrop';
+  lb.innerHTML = `
+    <div class="lb-shell" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <div class="lb-stage" id="lbStage"></div>
+      <button class="lb-btn lb-prev" aria-label="Previous">‹</button>
+      <button class="lb-btn lb-next" aria-label="Next">›</button>
+      
+    </div>`;
+  document.body.appendChild(lb);
+
+  const stage = lb.querySelector('#lbStage');
+  const btnPrev = lb.querySelector('.lb-prev');
+  const btnNext = lb.querySelector('.lb-next');
+  const btnClose = lb.querySelector('.lb-close');
+
+  let gallery = [];
+  let index = 0;
+
+  function show(i){
+    if(!gallery.length) return;
+    index = (i + gallery.length) % gallery.length;
+    stage.style.backgroundImage = `url("${gallery[index]}")`;
+  }
+  function open(images, startIndex=0){
+    // Filter to only images that actually load, so we never show black/empty slides
+    const candidates = (images || []).filter(Boolean);
+    if(!candidates.length) return;
+    const valid = [];
+    let settled = 0;
+    const finalize = ()=>{
+      if(!valid.length) return;
+      gallery = valid;
+      lb.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      show(startIndex);
+    };
+    candidates.forEach(src=>{
+      const probe = new Image();
+      probe.onload = ()=>{ valid.push(src); settled++; if(settled===candidates.length) finalize(); };
+      probe.onerror = ()=>{ settled++; if(settled===candidates.length) finalize(); };
+      probe.src = src;
+    });
+  }
+  function close(){
+    lb.classList.remove('is-open');
+    document.body.style.overflow = '';
+    gallery = []; index = 0;
+  }
+
+  btnPrev.addEventListener('click', ()=> show(index-1));
+  btnNext.addEventListener('click', ()=> show(index+1));
+  if(btnClose){ btnClose.addEventListener('click', close); }
+  lb.addEventListener('click', (e)=> { if(e.target === lb) close(); });
+
+  document.addEventListener('keydown', (e)=>{
+    if(!lb.classList.contains('is-open')) return;
+    if(e.key === 'Escape') close();
+    if(e.key === 'ArrowLeft') show(index-1);
+    if(e.key === 'ArrowRight') show(index+1);
+  });
+
+  let touchX = null;
+  stage.addEventListener('touchstart', e => touchX = e.touches[0].clientX, {passive:true});
+  stage.addEventListener('touchend', e => {
+    if(touchX == null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if(Math.abs(dx) > 40) { if(dx > 0) show(index-1); else show(index+1); }
+  }, {passive:true});
+
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('.portfolio-card');
+    if(!a) return;
+    e.preventDefault();
+    try{
+      const images = JSON.parse(a.getAttribute('data-images') || '[]');
+      open(images, 0);
+    }catch(err){ console.error('Invalid data-images JSON on card', err); }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const promo = document.getElementById('promo');
+  if(!promo) return;
+  function tick(){ if(scrollY<=2) promo.classList.remove('hidden'); else promo.classList.add('hidden'); }
+  tick(); addEventListener('scroll', tick, {passive:true});
+})();
+(function(){
+  const viewport = document.querySelector('.reviews .rev-viewport');
+  const track = document.querySelector('.reviews .rev-track');
+  if(!viewport || !track) return;
+  const cards = Array.from(track.querySelectorAll('.rev'));
+  const prev = document.querySelector('.reviews .rev-prev');
+  const next = document.querySelector('.reviews .rev-next');
+  let i=0, gap=24;
+  function cardW(){ return cards[0].getBoundingClientRect().width; }
+  function set(){ const cw=cardW(), vpw=viewport.clientWidth, center=(vpw-cw)/2;
+    track.style.transform = `translateX(${(-i*(cw+gap)+center)}px)`;
+    cards.forEach((c,idx)=>c.classList.toggle('active', idx===i));
+  }
+  function go(n){ i=(n+cards.length)%cards.length; set(); }
+  prev && prev.addEventListener('click', ()=>go(i-1));
+  next && next.addEventListener('click', ()=>go(i+1));
+  addEventListener('resize', set); set(); setInterval(()=>go(i+1), 6000);
+})();
+document.addEventListener('DOMContentLoaded', function(){
+  const links = Array.from(document.querySelectorAll('.lb-link'));
+  if(!links.length) return;
+  const lb = document.querySelector('.lightbox');
+  const media = lb.querySelector('.lb-media');
+  const bClose = lb.querySelector('.lb-close');
+  const bPrev = lb.querySelector('.lb-prev');
+  const bNext = lb.querySelector('.lb-next');
+  let idx=0;
+  function open(k){ idx=k; media.style.backgroundImage=`url('${links[idx].dataset.image}')`; lb.classList.add('open'); }
+  function close(){ lb.classList.remove('open'); }
+  function next(){ idx=(idx+1)%links.length; open(idx); }
+  function prev(){ idx=(idx-1+links.length)%links.length; open(idx); }
+  links.forEach((a,i)=>{ a.style.cursor='pointer'; a.addEventListener('click', e=>{e.preventDefault(); open(i);}); });
+  bClose.addEventListener('click', close); bNext.addEventListener('click', next); bPrev.addEventListener('click', prev);
+  lb.addEventListener('click', e=>{ if(e.target===lb) close(); });
+  document.addEventListener('keydown', e=>{ if(!lb.classList.contains('open')) return; if(e.key==='Escape') close(); if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev(); });
+});
+</script>
+</html>

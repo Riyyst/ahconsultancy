@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Contact — AH Consultancy</title><link href="Media/logo.png" rel="icon"/><link href="styles.css" rel="stylesheet"/><link href="responsive.css" rel="stylesheet"/><style>
+/* === FIXES (anchor offset, padding, borders, promo, pointers) === */
+#services{scroll-margin-top:120px}
+.tile{padding:12px}
+.form input,.form textarea{border:4px solid rgba(191,161,57,.55);border-radius:12px;background:rgba(255,255,255,.75)}
+textarea{resize:none;overflow:auto}
+.promo{width:100vw;margin-left:calc(50% - 50vw);z-index:50}
+.top{z-index:60}
+.hero-preview,.preview,.overlay{pointer-events:none}
+/* === Lightbox styles === */
+.lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);padding:24px;z-index:9999}
+.lightbox.open{display:flex}
+.lb-inner{position:relative;background:#fff;border-radius:16px;box-shadow:0 24px 64px rgba(0,0,0,.3);max-width:min(980px,92vw);width:100%;padding:16px}
+.lb-media{width:100%;aspect-ratio:16/9;background:#000 center/contain no-repeat;border-radius:12px}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:4px solid rgba(191,161,57,.55);border-radius:12px;width:48px;height:48px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);font-size:28px;line-height:1}
+.lb-prev{left:12px}.lb-next{right:12px}
+.lb-close{position:absolute;top:10px;right:14px;background:#fff;border:4px solid rgba(191,161,57,.55);border-radius:10px;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);font-size:22px;line-height:1}
+/* === Reviews viewport === */
+.reviews .rev-viewport{position:relative;overflow:hidden;padding:0 60px}
+.reviews .rev-track{display:flex;gap:24px;transition:transform .5s ease}
+.reviews .rev{flex:0 0 72%;background:rgba(255,255,255,.66);border:4px solid rgba(191,161,57,.55);border-radius:16px;padding:18px;box-shadow:0 12px 32px rgba(16,24,40,.08);opacity:.55;transform:scale(.96);transition:opacity .3s,transform .3s}
+.reviews .rev.active{opacity:1;transform:scale(1)}
+.reviews .rev-ctrl{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:4px solid rgba(191,161,57,.55);width:44px;height:44px;border-radius:12px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);z-index:2}
+.reviews .rev-prev{left:8px}.reviews .rev-next{right:8px}
+</style> <script async="" defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+</head><header class="top">
+<div class="wrap top-inner">
+<a class="brand" href="index.html">
+<img alt="AH Consultancy" class="brand-logo" src="Media/logo.png"/>
+<span class="btext"><strong>AH Consultancy</strong><em>Independent Creator &amp; Operator</em></span>
+</a>
+<nav class="nav">
+<a href="index.html#services">Services</a>
+<a href="about.html">About</a>
+<a class="btn small" href="contact.html">Contact</a>
+</nav>
+</div>
+</header>
+<main class="wrap section" style="text-align:center;">
+<h1>Choose how you wish to reach out to me</h1>
+<p class="muted">Pick what’s easiest — book time or send me a quick note.</p>
+<p><a class="btn" href="https://cal.com/adrian.headley/10min" rel="noopener" target="_blank">Book time to have a call</a></p>
+<div class="or-sep"><span class="muted">or</span></div>
+<h2>Send me an email</h2>
+<form action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;">
+<label>Full name</label><input name="name" placeholder="Full name" required="" type="text"/>
+<label>Email</label><input name="from_email" placeholder="you@company.com" required="" type="email"/>
+<label>Phone (optional)</label><input name="phone" placeholder="Phone number (optional)" type="tel"/>
+<label>Message</label><textarea name="message" placeholder="Tell me what you’d like to achieve…" rows="8"></textarea>
+<div class="cf-challenge" data-callback="onTurnstileSuccess" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" id="turnstile-widget" style="margin-bottom:1rem;"></div>
+
+<div id="turnstile-widget" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" style="margin-bottom:1rem;"></div>
+<button class="btn" type="submit">Send</button>
+<div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;visibility:hidden;"><label>Company<input autocomplete="off" name="company" tabindex="-1" type="text"/></label></div>
+</form>
+<div id="thankyou-message" aria-live="polite" style="display:none;margin-top:1rem;font-weight:600;"></div>
+<div aria-live="polite" id="form-status" style="margin-top:1rem;"></div>
+</main>
+<footer class="site-foot">
+<div class="wrap foot-grid">
+<small>© 2025 Adrian Headley</small>
+<ul class="icons">
+<li><a class="icon-btn" href="contact.html" title="Email">✉</a></li>
+<li><a class="icon-btn" href="https://www.linkedin.com" target="_blank">in</a></li>
+<li><a class="icon-btn" href="https://x.com" target="_blank">𝕏</a></li>
+</ul>
+</div>
+</footer>
+<script defer="" src="main.js"></script>
+<!-- Lightbox -->
+<div aria-hidden="true" class="lightbox">
+<div class="lb-inner">
+<button aria-label="Previous" class="lb-arrow lb-prev">‹</button>
+<button aria-label="Next" class="lb-arrow lb-next">›</button>
+<div class="lb-media"></div>
+</div>
+</div>
+<script>
+(function(){
+  var MIN_FILL_MS = 5000;
+  var start = Date.now();
+  function $(sel){return document.querySelector(sel);}
+  function ready(fn){ if(document.readyState!=="loading") fn(); else document.addEventListener("DOMContentLoaded", fn); }
+  ready(function(){
+    var form = document.querySelector("form[action^='https://formspree.io/f/']") || document.querySelector("form");
+    if(!form) return;
+    var status = document.getElementById("form-status");
+    // Ensure reply-to works nicely: add _replyto alias if not present
+    if (!form.querySelector("[name='_replyto']")) {
+      var em = form.querySelector("input[type='email']");
+      if (em) { var alias = document.createElement("input"); alias.type="hidden"; alias.name="_replyto"; alias.value=em.value; em.addEventListener("input", function(){ alias.value = em.value; }); form.appendChild(alias); }
+    }
+    // Prevent bots / too-fast submits
+    form.addEventListener("submit", function(ev){
+      // honeypot
+      var hp = form.querySelector("input[name='company']");
+      if (hp && hp.value.trim().length > 0) { ev.preventDefault(); if(status) status.textContent = "Submission blocked by anti-spam checks."; return false; }
+      // min time
+      if (Date.now() - start < MIN_FILL_MS) { ev.preventDefault(); if(status) status.textContent = "Please review your message briefly before sending."; return false; }
+      if (status) status.textContent = "Sending…";
+    });
+  });
+})();
+</script>
+<script>
+(function() {
+  var verified = false;
+  window.onTurnstileSuccess = function(token) { verified = true; };
+  var start = Date.now();
+  document.addEventListener("DOMContentLoaded", function() {
+    var form = document.querySelector("form[action^='https://formspree.io/f/']");
+    if(!form) return;
+    var status = document.getElementById("form-status");
+    form.addEventListener("submit", function(ev) {
+      // check honeypot
+      var hp = form.querySelector("input[name='company']");
+      if (hp && hp.value.trim().length > 0) { ev.preventDefault(); if(status) status.textContent="Submission blocked by anti-spam checks."; return false; }
+      // min fill time
+      if (Date.now() - start < 5000) { ev.preventDefault(); if(status) status.textContent="Please review your message before sending."; return false; }
+      // turnstile verified
+      if (!verified) { ev.preventDefault(); if(status) status.textContent="Please complete the security check (I'm not a robot)."; return false; }
+      if(status) status.textContent="Sending…";
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const promo = document.getElementById('promo');
+  if(!promo) return;
+  function tick(){ if(scrollY<=2) promo.classList.remove('hidden'); else promo.classList.add('hidden'); }
+  tick(); addEventListener('scroll', tick, {passive:true});
+})();
+(function(){
+  const viewport = document.querySelector('.reviews .rev-viewport');
+  const track = document.querySelector('.reviews .rev-track');
+  if(!viewport || !track) return;
+  const cards = Array.from(track.querySelectorAll('.rev'));
+  const prev = document.querySelector('.reviews .rev-prev');
+  const next = document.querySelector('.reviews .rev-next');
+  let i=0, gap=24;
+  function cardW(){ return cards[0].getBoundingClientRect().width; }
+  function set(){ const cw=cardW(), vpw=viewport.clientWidth, center=(vpw-cw)/2;
+    track.style.transform = `translateX(${(-i*(cw+gap)+center)}px)`;
+    cards.forEach((c,idx)=>c.classList.toggle('active', idx===i));
+  }
+  function go(n){ i=(n+cards.length)%cards.length; set(); }
+  prev && prev.addEventListener('click', ()=>go(i-1));
+  next && next.addEventListener('click', ()=>go(i+1));
+  addEventListener('resize', set); set(); setInterval(()=>go(i+1), 6000);
+})();
+document.addEventListener('DOMContentLoaded', function(){
+  const links = Array.from(document.querySelectorAll('.lb-link'));
+  if(!links.length) return;
+  const lb = document.querySelector('.lightbox');
+  const media = lb.querySelector('.lb-media');
+  const bClose = lb.querySelector('.lb-close');
+  const bPrev = lb.querySelector('.lb-prev');
+  const bNext = lb.querySelector('.lb-next');
+  let idx=0;
+  function open(k){ idx=k; media.style.backgroundImage=`url('${links[idx].dataset.image}')`; lb.classList.add('open'); }
+  function close(){ lb.classList.remove('open'); }
+  function next(){ idx=(idx+1)%links.length; open(idx); }
+  function prev(){ idx=(idx-1+links.length)%links.length; open(idx); }
+  links.forEach((a,i)=>{ a.style.cursor='pointer'; a.addEventListener('click', e=>{e.preventDefault(); open(i);}); });
+  bClose.addEventListener('click', close); bNext.addEventListener('click', next); bPrev.addEventListener('click', prev);
+  lb.addEventListener('click', e=>{ if(e.target===lb) close(); });
+  document.addEventListener('keydown', e=>{ if(!lb.classList.contains('open')) return; if(e.key==='Escape') close(); if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev(); });
+});
+</script>
+</html>
