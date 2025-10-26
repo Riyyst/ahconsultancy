@@ -96,17 +96,3 @@ onScroll(); addEventListener('scroll', onScroll, {passive:true});
   }
 })();
 // --- end precise jump (Mk28) ---
-
-
-// A11Y: Keyboard support for reviews carousel
-(function(){
-  const viewport = document.querySelector('.rev-viewport');
-  const prev = document.querySelector('.reviews .rev-prev');
-  const next = document.querySelector('.reviews .rev-next');
-  if(!viewport) return;
-  if(!viewport.hasAttribute('tabindex')) viewport.tabIndex = 0;
-  viewport.addEventListener('keydown', function(e){
-    if(e.key === 'ArrowLeft'){ e.preventDefault(); prev && prev.click(); }
-    if(e.key === 'ArrowRight'){ e.preventDefault(); next && next.click(); }
-  });
-})();

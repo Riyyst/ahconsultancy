@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Business Documents — AH Consultancy</title><link href="Media/logo.png" rel="icon"/><link href="styles.css" rel="stylesheet"/><link href="responsive.css" rel="stylesheet"/><style>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Documents — AH Consultancy</title><link rel="icon" href="Media/logo.png"><link rel="stylesheet" href="styles.css"><style>
 /* === FIXES (anchor offset, padding, borders, promo, pointers) === */
 #services{scroll-margin-top:120px}
 .tile{padding:12px}
@@ -26,45 +25,51 @@ textarea{resize:none;overflow:auto}
 .reviews .rev-ctrl{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:4px solid rgba(191,161,57,.55);width:44px;height:44px;border-radius:12px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);z-index:2}
 .reviews .rev-prev{left:8px}.reviews .rev-next{right:8px}
 </style></head><header class="top">
-<div class="wrap top-inner">
-<a class="brand" href="index.html">
-<img alt="AH Consultancy" class="brand-logo" src="Media/logo.png"/>
-<span class="btext"><strong>AH Consultancy</strong><em>Independent Creator &amp; Operator</em></span>
-</a>
-<nav class="nav">
-<a href="index.html#services">Services</a>
-<a href="about.html">About</a>
-<a class="btn small" href="contact.html">Contact</a>
-</nav>
-</div>
+  <div class="wrap top-inner">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="Media/logo.png" alt="AH Consultancy">
+      <span class="btext"><strong>AH Consultancy</strong><em>Independent Creator &amp; Operator</em></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html#services">Services</a>
+      <a href="about.html">About</a>
+      <a class="btn small" href="contact.html">Contact</a>
+    </nav>
+  </div>
 </header>
+
 <main class="wrap section">
-<h1>Business Documents</h1>
-<p>Business Documents provide ready‑to‑use templates for everyday operations — proposals, policies, and internal guides — designed to look consistent and feel professional.</p>
-<p>Reusable, brand‑ready document packs: proposals, contracts, SOPs, and internal checklists. You’ll get fill‑in‑the‑blanks versions plus examples, so anyone on your team can use them right away.</p>
-<h3>Why it matters</h3>
-<p>Templates create consistency. They speed up drafting, reduce errors, and make approvals faster across your business.</p>
-<ul>
-<li>Create consistent, branded materials quickly.</li>
-<li>Simplify day‑to‑day admin and approvals.</li>
-<li>Reduce errors through clear, standardised formats.</li>
-<li>Present your business professionally every time.</li>
-</ul>
-<h3>Portfolio</h3>
-<p>Due to the service type a portfolio can not be shown</p>
-<p></p>
+  <h1>Business Documents</h1>
+  <p>Business Documents provide ready‑to‑use templates for everyday operations — proposals, policies, and internal guides — designed to look consistent and feel professional.</p>
+  <p>Reusable, brand‑ready document packs: proposals, contracts, SOPs, and internal checklists. You’ll get fill‑in‑the‑blanks versions plus examples, so anyone on your team can use them right away.</p>
+  <h3>Why it matters</h3>
+  <p>Templates create consistency. They speed up drafting, reduce errors, and make approvals faster across your business.</p>
+  <ul>
+    <li>Create consistent, branded materials quickly.</li>
+    <li>Simplify day‑to‑day admin and approvals.</li>
+    <li>Reduce errors through clear, standardised formats.</li>
+    <li>Present your business professionally every time.</li>
+  </ul>
+
+  <h3>Portfolio</h3>
+  <p>Due to the service type a portfolio can not be shown</p>
+
+
+  <p></p>
 </main>
-<footer class="site-foot">
-<div class="wrap foot-grid">
-<small>© 2025 Adrian Headley</small>
-<ul class="icons">
-<li><a class="icon-btn" href="contact.html" title="Email">✉</a></li>
-<li><a class="icon-btn" href="https://www.linkedin.com" target="_blank">in</a></li>
-<li><a class="icon-btn" href="https://x.com" target="_blank">𝕏</a></li>
-</ul>
-</div>
-</footer>
-<script defer="" src="main.js"></script>
+
+  <footer class="site-foot">
+    <div class="wrap foot-grid">
+      <small>© 2025 Adrian Headley</small>
+      <ul class="icons">
+        <li><a class="icon-btn" href="contact.html" title="Email">✉</a></li>
+        <li><a class="icon-btn" target="_blank" href="https://www.linkedin.com">in</a></li>
+        <li><a class="icon-btn" target="_blank" href="https://x.com">𝕏</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="main.js" defer></script>
+
 <!-- PORTFOLIO LIGHTBOX (injected) -->
 <script>
 (function(){
@@ -154,6 +159,7 @@ textarea{resize:none;overflow:auto}
 })();
 </script>
 
+</body>
 <script>
 (function(){
   const promo = document.getElementById('promo');
@@ -198,4 +204,5 @@ document.addEventListener('DOMContentLoaded', function(){
   document.addEventListener('keydown', e=>{ if(!lb.classList.contains('open')) return; if(e.key==='Escape') close(); if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev(); });
 });
 </script>
+
 </html>
