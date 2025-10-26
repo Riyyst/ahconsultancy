@@ -1,42 +1,20 @@
-/* responsive.css — additive, non-destructive tweaks for mobile responsiveness and a11y */
+/* === Incremental Fixes (mobile polish) === */
 
-/* 0) Media defaults */
-img, svg, video, canvas { max-width: 100%; height: auto; }
-iframe { max-width: 100%; border: 0; }
-:where(.wrap){ width: 100%; }
-:root{ --safe-top: env(safe-area-inset-top); --safe-bottom: env(safe-area-inset-bottom); }
-
-/* 1) Tap target sizing + focus visibility */
-:where(a, button, .btn, .cta, [role="button"]) {
-  min-height: 44px;
-  min-width: 44px;
-}
-:where(a, button, .btn, .cta, input, textarea):focus-visible {
-  outline: 3px solid rgba(191,161,57,.9);
-  outline-offset: 2px;
-  box-shadow: none;
+/* Reviews: ensure centered and consistent look on narrow screens */
+@media (max-width: 480px){
+  .rev-viewport{ padding: 0 16px !important; }
+  .rev-track{ gap: 16px !important; }
+  .rev{ flex: 0 0 92% !important; } /* keep a subtle peek of neighbors */
+  .rev-ctrl{ transform: translateY(-50%); } /* retain vertical centering */
 }
 
-/* 2) Prevent sticky header overlap for in-page anchors */
-html { scroll-padding-top: max(84px, var(--safe-top)); }
-#services { scroll-margin-top: 120px; } /* preserve behavior already used */
-
-/* 3) Forms: prevent zoom on iOS */
-.form input, .form textarea, input, textarea { font-size: 16px; line-height: 1.4; }
-
-/* 4) Tables & wide blocks: allow horizontal scroll within container only */
-:where(.table, table, .code, pre) { max-width: 100%; overflow-x: auto; display: block; }
-
-/* 5) Grids: ensure single-column on narrow screens if not already covered */
-@media (max-width: 640px){
-  .grid:not(.force-cols) { grid-template-columns: 1fr !important; }
-  .portfolio-grid { grid-template-columns: 1fr !important; }
-  .top-inner { flex-wrap: wrap; gap: 8px; }
+/* Page breathing room: edges + top spacing */
+@media (max-width: 480px){
+  .wrap{ padding-left: 20px !important; padding-right: 20px !important; }
+  main :is(h1, h2, .headline):first-child{ margin-top: 12px !important; }
 }
 
-/* 6) Safe areas for sticky bars */
-.promo { padding-top: max(8px, var(--safe-top)); }
-footer { padding-bottom: max(16px, var(--safe-bottom)); }
-
-/* 7) Nav link spacing for easier touch */
-.nav a, .top a { padding-block: 8px; }
+/* Slightly increase default content side padding for mid phones */
+@media (max-width: 390px){
+  .wrap{ padding-left: 18px !important; padding-right: 18px !important; }
+}
