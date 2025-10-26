@@ -49,7 +49,7 @@ textarea{resize:none;overflow:auto}
 <label>Email</label><input name="from_email" placeholder="you@company.com" required="" type="email"/>
 <label>Phone (optional)</label><input name="phone" placeholder="Phone number (optional)" type="tel"/>
 <label>Message</label><textarea name="message" placeholder="Tell me what you’d like to achieve…" rows="8"></textarea>
-<div id="turnstile-widget" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" data-appearance="interaction-only" style="margin:0.75rem 0;"></div>
+<div id="turnstile-widget" class="cf-turnstile" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-appearance="interaction-only" data-callback="onTurnstileSuccess" style="margin:0.75rem 0;"></div>
 <button class="btn" type="submit">Send</button>
 <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;visibility:hidden;"><label>Company<input autocomplete="off" name="company" tabindex="-1" type="text"/></label></div>
 </form>
