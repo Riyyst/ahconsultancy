@@ -1,5 +1,6 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact — AH Consultancy</title><link rel="icon" href="Media/logo.png"><link rel="stylesheet" href="styles.css"><style>
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Contact — AH Consultancy</title><link href="Media/logo.png" rel="icon"/><link href="styles.css" rel="stylesheet"/><link href="responsive.css" rel="stylesheet"/><style>
 /* === FIXES (anchor offset, padding, borders, promo, pointers) === */
 #services{scroll-margin-top:120px}
 .tile{padding:12px}
@@ -23,65 +24,57 @@ textarea{resize:none;overflow:auto}
 .reviews .rev.active{opacity:1;transform:scale(1)}
 .reviews .rev-ctrl{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:4px solid rgba(191,161,57,.55);width:44px;height:44px;border-radius:12px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);z-index:2}
 .reviews .rev-prev{left:8px}.reviews .rev-next{right:8px}
-</style>  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</style> <script async="" defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
 </head><header class="top">
-  <div class="wrap top-inner">
-    <a class="brand" href="index.html">
-      <img class="brand-logo" src="Media/logo.png" alt="AH Consultancy">
-      <span class="btext"><strong>AH Consultancy</strong><em>Independent Creator &amp; Operator</em></span>
-    </a>
-    <nav class="nav">
-      <a href="index.html#services">Services</a>
-      <a href="about.html">About</a>
-      <a class="btn small" href="contact.html">Contact</a>
-    </nav>
-  </div>
+<div class="wrap top-inner">
+<a class="brand" href="index.html">
+<img alt="AH Consultancy" class="brand-logo" src="Media/logo.png"/>
+<span class="btext"><strong>AH Consultancy</strong><em>Independent Creator &amp; Operator</em></span>
+</a>
+<nav class="nav">
+<a href="index.html#services">Services</a>
+<a href="about.html">About</a>
+<a class="btn small" href="contact.html">Contact</a>
+</nav>
+</div>
 </header>
-
 <main class="wrap section" style="text-align:center;">
-  <h1>Choose how you wish to reach out to me</h1>
-  <p class="muted">Pick what’s easiest — book time or send me a quick note.</p>
-  <p><a class="btn" href="https://cal.com/adrian.headley/10min" target="_blank" rel="noopener">Book time to have a call</a></p>
-  <div class="or-sep"><span class="muted">or</span></div>
-  <h2>Send me an email</h2>
-  <form id="ahc-contact-form" class="form" action="https://formspree.io/f/xyznrqqn" method="POST" enctype="text/plain" style="max-width:640px;margin:0 auto;text-align:left;" action="https://formspree.io/f/xyznrqqn" method="POST">
-    <label>Full name</label><input type="text" name="name" placeholder="Full name" required>
-    <label>Email</label><input type="email" name="from_email" placeholder="you@company.com" required>
-    <label>Phone (optional)</label><input type="tel" name="phone" placeholder="Phone number (optional)">
-    <label>Message</label><textarea name="message" rows="8" placeholder="Tell me what you’d like to achieve…"></textarea>
-<div id="turnstile-widget" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" style="margin:0.75rem 0;"></div>
+<h1>Choose how you wish to reach out to me</h1>
+<p class="muted">Pick what’s easiest — book time or send me a quick note.</p>
+<p><a class="btn" href="https://cal.com/adrian.headley/10min" rel="noopener" target="_blank">Book time to have a call</a></p>
+<div class="or-sep"><span class="muted">or</span></div>
+<h2>Send me an email</h2>
+<form id="ahc-contact-form" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;">
+<label>Full name</label><input name="name" placeholder="Full name" required="" type="text"/>
+<label>Email</label><input name="from_email" placeholder="you@company.com" required="" type="email"/>
+<label>Phone (optional)</label><input name="phone" placeholder="Phone number (optional)" type="tel"/>
+<label>Message</label><textarea name="message" placeholder="Tell me what you’d like to achieve…" rows="8"></textarea>
+<div id="turnstile-widget" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" data-appearance="interaction-only" style="margin:0.75rem 0;"></div>
 <button class="btn" type="submit">Send</button>
-  <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;visibility:hidden;"><label>Company<input type="text" name="company" autocomplete="off" tabindex="-1"></label></div>
+<div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;visibility:hidden;"><label>Company<input autocomplete="off" name="company" tabindex="-1" type="text"/></label></div>
 </form>
 <div id="thankyou-message" aria-live="polite" style="display:none;margin-top:1rem;font-weight:600;"></div>
-<div id="form-status" aria-live="polite" style="margin-top:1rem;"></div>
+<div aria-live="polite" id="form-status" style="margin-top:1rem;"></div>
 </main>
-
-  <footer class="site-foot">
-    <div class="wrap foot-grid">
-      <small>© 2025 Adrian Headley</small>
-      <ul class="icons">
-        <li><a class="icon-btn" href="contact.html" title="Email">✉</a></li>
-        <li><a class="icon-btn" target="_blank" href="https://www.linkedin.com">in</a></li>
-        <li><a class="icon-btn" target="_blank" href="https://x.com">𝕏</a></li>
-      </ul>
-    </div>
-  </footer>
-  <script src="main.js" defer></script>
-
-<!-- Lightbox -->
-<div class="lightbox" aria-hidden="true">
-  <div class="lb-inner">
-    
-    <button class="lb-arrow lb-prev" aria-label="Previous">‹</button>
-    <button class="lb-arrow lb-next" aria-label="Next">›</button>
-    <div class="lb-media"></div>
-  </div>
+<footer class="site-foot">
+<div class="wrap foot-grid">
+<small>© 2025 Adrian Headley</small>
+<ul class="icons">
+<li><a class="icon-btn" href="contact.html" title="Email">✉</a></li>
+<li><a class="icon-btn" href="https://www.linkedin.com" target="_blank">in</a></li>
+<li><a class="icon-btn" href="https://x.com" target="_blank">𝕏</a></li>
+</ul>
 </div>
-
-
-
-
+</footer>
+<script defer="" src="main.js"></script>
+<!-- Lightbox -->
+<div aria-hidden="true" class="lightbox">
+<div class="lb-inner">
+<button aria-label="Previous" class="lb-arrow lb-prev">‹</button>
+<button aria-label="Next" class="lb-arrow lb-next">›</button>
+<div class="lb-media"></div>
+</div>
+</div>
 
 <script>
 (function() {
@@ -106,107 +99,6 @@ textarea{resize:none;overflow:auto}
 })();
 </script>
 
-
-<script>
-(function(){
-  var MIN_FILL_MS = 5000;
-  var start = Date.now();
-  var verified = false;
-  window.onTurnstileSuccess = function(){ verified = true; };
-
-  function ready(fn){ if(document.readyState!=="loading") fn(); else document.addEventListener("DOMContentLoaded", fn); }
-  ready(function(){
-    var form   = document.getElementById("ahc-contact-form");
-    var status = document.getElementById("form-status");
-    var thanks = document.getElementById("thankyou-message");
-    if (!form || form.dataset.bound === "1") return;
-    form.dataset.bound = "1";
-
-    // Mirror Reply-To
-    var emailInput = form.querySelector('input[type="email"], input[name="from_email"]');
-    if (emailInput && !form.querySelector('input[name="_replyto"]')) {
-      var alias = document.createElement("input");
-      alias.type = "hidden"; alias.name = "_replyto"; alias.value = emailInput.value || "";
-      emailInput.addEventListener("input", function(){ alias.value = emailInput.value; });
-      form.appendChild(alias);
-    }
-
-    form.addEventListener("submit", async function(ev){
-      ev.preventDefault(); ev.stopPropagation();
-
-      // Honeypot
-      var hp = form.querySelector('input[name="company"]');
-      if (hp && hp.value.trim().length > 0) { if (status) status.textContent = "Submission blocked by anti-spam checks."; return false; }
-
-      // Minimum fill time
-      if (Date.now() - start < MIN_FILL_MS) { if (status) status.textContent = "Please review your message before sending."; return false; }
-
-      // Turnstile verification (visible checkbox)
-      try {
-        var widget = document.getElementById("turnstile-widget");
-        var token  = (widget && typeof turnstile !== "undefined") ? turnstile.getResponse(widget) : null;
-        if (!token) { if (status) status.textContent = "Please complete the security check (I'm not a robot)."; return false; }
-      } catch(_) {}
-
-      if (status) status.textContent = "Sending…";
-
-      try {
-        // Build JSON payload
-        var data = {};
-        Array.from(form.querySelectorAll("input, textarea, select")).forEach(function(el){
-          if (!el.name) return;
-          if (el.type === "submit" || el.type === "button") return;
-          if (el.name === "company") return; // honeypot
-          if ((el.type === "checkbox" || el.type === "radio") && !el.checked) return;
-          data[el.name] = el.value;
-        });
-
-        // Include Turnstile token
-        try {
-          var widget = document.getElementById("turnstile-widget");
-          var token2 = (widget && typeof turnstile !== "undefined") ? turnstile.getResponse(widget) : null;
-          if (token2) data["cf-turnstile-response"] = token2;
-        } catch(_) {}
-
-        // JSON POST (prevents Formspree redirect + "Bad form post request")
-        var res = await fetch(form.action, {
-          method: "POST",
-          headers: { "Accept":"application/json", "Content-Type":"application/json" },
-          body: JSON.stringify(data)
-        });
-
-        if (!res.ok) {
-          var errTxt = "Sorry, we couldn’t send your message just now. Please try again.";
-          try {
-            var j = await res.json();
-            if (j && j.error) errTxt = j.error;
-            if (j && j.errors && j.errors.length) errTxt = j.errors.map(function(e){ return e.message || e.code; }).join("; ");
-          } catch(_) {}
-          if (status) status.textContent = errTxt;
-          return;
-        }
-
-        // Success: hide form and show thank-you text
-        form.style.display = "none";
-        if (status) status.style.display = "none";
-        if (thanks) {
-          thanks.style.display = "block";
-          thanks.textContent = "Thank you for reaching out, I will aim to response as soon as possible!";
-        }
-
-        // Reset state
-        try { form.reset(); } catch(_) {}
-        if (typeof turnstile !== "undefined") { try { turnstile.reset(); } catch(_) {} }
-        start = Date.now();
-      } catch (e) {
-        if (status) status.textContent = "Network error — please check your connection and try again.";
-      }
-    });
-  });
-})();
-</script>
-
-</body>
 <script>
 (function(){
   const promo = document.getElementById('promo');
@@ -251,5 +143,4 @@ document.addEventListener('DOMContentLoaded', function(){
   document.addEventListener('keydown', e=>{ if(!lb.classList.contains('open')) return; if(e.key==='Escape') close(); if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev(); });
 });
 </script>
-
 </html>

@@ -266,3 +266,33 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
   clip-path: inset(0 round 14px 14px 0 0);
 }
 
+
+
+/* === Added: Content-side padding for readability (excludes header/nav/footer) === */
+@media (max-width: 1024px){
+  main.wrap { 
+    padding-left: clamp(14px, 4vw, 28px);
+    padding-right: clamp(14px, 4vw, 28px);
+    box-sizing: border-box;
+  }
+}
+
+/* === Added: Review cards – keep aspect and spacing on small screens === */
+@media (max-width: 720px){
+  .reviews .rev-viewport{ padding-left: 16px; padding-right: 16px; }
+  .reviews .rev-track{ gap: 16px; }
+  .reviews .rev{ 
+    flex: 0 0 92%;
+    max-width: 92%;
+  }
+  .reviews .rev-ctrl{ 
+    top: auto; bottom: 8px; transform: none; 
+    width: 40px; height: 40px; font-size: 20px;
+  }
+}
+
+/* Micro-tweak for ultra-narrow devices */
+@media (max-width: 380px){
+  .reviews .rev{ flex-basis: 96%; max-width: 96%; }
+  main.wrap { padding-left: 12px; padding-right: 12px; }
+}
