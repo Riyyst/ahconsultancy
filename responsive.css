@@ -3,18 +3,19 @@
 /* Reviews: ensure centered and consistent look on narrow screens */
 @media (max-width: 480px){
   .rev-viewport{ padding: 0 16px !important; }
-  .rev-track{ gap: 16px !important; }
-  .rev{ flex: 0 0 92% !important; } /* keep a subtle peek of neighbors */
+  .rev-track{ gap: 12px !important; }
+  .rev{ flex: 0 0 100% !important; } /* keep a subtle peek of neighbors */
   .rev-ctrl{ transform: translateY(-50%); } /* retain vertical centering */
 }
 
 /* Page breathing room: edges + top spacing */
 @media (max-width: 480px){
-  .wrap{ padding-left: 20px !important; padding-right: 20px !important; }
-  main :is(h1, h2, .headline):first-child{ margin-top: 12px !important; }
+  .wrap{ padding-left: 22px !important; padding-right: 22px !important; }
+  main :is(h1, h2, .headline):first-child{ margin-top: 16px !important; }
 }
 
 /* Slightly increase default content side padding for mid phones */
 @media (max-width: 390px){
-  .wrap{ padding-left: 18px !important; padding-right: 18px !important; }
+  .wrap{ padding-left: 22px !important; padding-right: 22px !important; }
 }
+html{scroll-padding-top:84px}
