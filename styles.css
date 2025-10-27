@@ -302,3 +302,34 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
   .nav{ flex:1 1 auto; display:flex; justify-content:flex-end; gap:12px; text-align:right; }
   .nav a{ display:inline-block; }
 }
+
+
+/* === Fix: Properly centre and size review cards on mobile (override previous rules) === */
+@media (max-width: 720px){
+  .reviews .rev-viewport{
+    padding-left: 16px;
+    padding-right: 16px;
+    overflow: hidden;
+  }
+  .reviews .rev-track{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .reviews .rev{
+    flex: 0 0 90% !important;
+    max-width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .reviews .rev-ctrl{
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+}
+@media (max-width: 380px){
+  .reviews .rev{ flex-basis: 94% !important; max-width: 94% !important; }
+}
