@@ -97,3 +97,36 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
   .reviews .rev-track { justify-content: center; }
   .reviews .rev { margin-left:auto; margin-right:auto; }
 }
+
+
+/* === Mobile: centre review cards & track === */
+@media (max-width: 720px){
+  .reviews .rev-viewport{
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  /* shrink-to-fit and centre the track within the viewport */
+  .reviews .rev-track{
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
+  /* centre each card */
+  .reviews .rev{
+    margin-left: auto;
+    margin-right: auto;
+    flex-basis: 92%;
+    max-width: 92%;
+  }
+  /* keep arrows visually centred relative to viewport */
+  .reviews .rev-ctrl{
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* Ultra-narrow tweak */
+@media (max-width: 380px){
+  .reviews .rev{ flex-basis: 96%; max-width: 96%; }
+}
