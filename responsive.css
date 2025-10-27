@@ -157,3 +157,31 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
     transform: translateY(-50%) !important;
   }
 }
+
+
+/* === Refined mobile review centring: one full card only === */
+@media (max-width: 768px){
+  .reviews .rev-viewport{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+  .reviews .rev-track{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .reviews .rev{
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+  .reviews .rev-ctrl{
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+}
