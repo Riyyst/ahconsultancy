@@ -326,6 +326,7 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
   }
   .reviews .rev-ctrl{
     top: 50% !important;
+    transform: translateY(-50%) !important;
   }
 }
 
@@ -343,6 +344,7 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
     align-items: stretch !important;
     width: 100% !important;
     margin: 0 auto !important;
+    transform: none !important;
     transition: none !important;
   }
   .reviews .rev{
@@ -352,48 +354,35 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
   }
   .reviews .rev-ctrl{
     top: 50% !important;
+    transform: translateY(-50%) !important;
   }
 }
 
-/* === Authoritative mobile carousel rules (no CSS transform on track) === */
-@media (max-width: 768px){
-  .reviews .rev-viewport{ overflow:hidden; padding: 0 12px; }
-  .reviews .rev-track{
-    display:flex; width:auto; margin:0;
-    gap:24px; justify-content:flex-start; align-items:stretch;
-    transition: transform .5s ease;
-  }
-  .reviews .rev{ flex:0 0 100%; max-width:100%; margin:0; }
-  .reviews .rev-ctrl{ top:50%; transform:translateY(-50%); }
-}
 
-
-/* === Mobile reviews: one card, perfectly centred, smooth slide (gap-aware) === */
+/* === Mobile reviews: scale card to fit with side breathing room (keeps smooth slide) === */
 @media (max-width: 768px){
-  /* Provide half the gap as inner padding so the centred offset aligns visually */
   .reviews .rev-viewport{
     overflow: hidden;
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    padding-left: 12px;
+    padding-right: 12px;
   }
   .reviews .rev-track{
     display: flex !important;
-    gap: 24px !important;            /* must match JS 'gap' constant */
+    gap: 24px !important;
     width: auto !important;
     margin: 0 !important;
     justify-content: flex-start !important;
     align-items: stretch !important;
     transition: transform .5s ease !important;
-    /* No 'transform' here; JS sets translateX(...) */
   }
-  /* One full slide equals viewport width minus the gap */
   .reviews .rev{
     flex: 0 0 calc(100% - 24px) !important;
     max-width: calc(100% - 24px) !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
+    transform: scale(0.92);
+    transform-origin: center center;
   }
-  .reviews .rev-ctrl{
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-  }
+}
+@media (max-width: 400px){
+  .reviews .rev{ transform: scale(0.90); }
 }
