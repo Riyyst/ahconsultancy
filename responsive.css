@@ -172,8 +172,8 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
     align-items: stretch !important;
     width: 100% !important;
     margin: 0 auto !important;
-    /* removed: transform none !important */
-    /* removed: transition none !important */
+    transform: none !important;
+    transition: none !important;
   }
   .reviews .rev{
     flex: 0 0 100% !important;
@@ -187,44 +187,10 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
 }
 
 
-/* === FINAL FIX: restore full slider motion while keeping one-card view on mobile === */
-@media (max-width: 768px) {
-  .reviews .rev-viewport {
-    overflow: hidden;
-    display: block;
-    padding: 0 12px;
-  }
-  .reviews .rev-track {
-    display: flex !important;
-    gap: 0 !important;
-    width: auto !important;
-    margin: 0 !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
-    transition: transform 0.5s ease !important;
-    transform: translateX(0); /* JS will overwrite */
-  }
-  .reviews .rev {
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-  .reviews .rev-ctrl {
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-  }
-}
-
-
-/* === Safety: mobile carousel uses JS transform; do not block movement === */
+/* === Visible card perfectly centred on mobile: align slide width to viewport === */
 @media (max-width: 768px){
-  .reviews .rev-viewport{ overflow:hidden; padding:0 12px; }
-  .reviews .rev-track{
-    display:flex; gap:0; width:auto; margin:0;
-    justify-content:flex-start; align-items:stretch;
-    transition: transform .5s ease;
-    /* No transform here; JS sets translateX(...) */
-  }
-  .reviews .rev{ flex:0 0 100%; max-width:100%; margin:0; }
-  .reviews .rev-ctrl{ top:50%; transform:translateY(-50%); }
+  .reviews .rev-viewport{ padding-left: 0 !important; padding-right: 0 !important; }
+  .reviews .rev-track{ display:flex !important; gap:0 !important; width:auto !important; margin:0 !important; justify-content:flex-start !important; transition: transform .5s ease !important; }
+  .reviews .rev{ flex:0 0 100% !important; max-width:100% !important; margin:0 !important; }
+  .reviews .rev-ctrl{ top:50% !important; transform: translateY(-50%) !important; }
 }
