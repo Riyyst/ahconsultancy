@@ -172,8 +172,8 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
     align-items: stretch !important;
     width: 100% !important;
     margin: 0 auto !important;
-    
-    
+    transform: none !important;
+    transition: none !important;
   }
   .reviews .rev{
     flex: 0 0 100% !important;
@@ -184,16 +184,4 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
     top: 50% !important;
     transform: translateY(-50%) !important;
   }
-}
-
-/* Reviews mobile hard override */
-@media (max-width: 1024px){
-  .reviews .rev-viewport{ overflow: hidden; position: relative; }
-  .reviews .rev-track{
-    margin: 0 !important;
-    will-change: transform;
-    transition: transform .5s ease;
-    touch-action: pan-y;
-  }
-  .reviews .rev-ctrl:focus:not(:focus-visible){ outline: none; }
 }

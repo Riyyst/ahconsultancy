@@ -65,12 +65,12 @@ textarea{resize:none;overflow:auto}
 </div>
 </section>
 <div class="divider"></div>
-<section class="section reviews" role="region" aria-label="Client reviews carousel">
+<section class="section reviews">
 <h2>Reviews</h2>
 <p class="muted">A few words from clients.</p>
 <div class="rev-viewport">
-<button class="rev-ctrl rev-prev" aria-label="Previous review">‹</button>
-<button class="rev-ctrl rev-next" aria-label="Next review">›</button>
+<button class="rev-ctrl rev-prev">‹</button>
+<button class="rev-ctrl rev-next">›</button>
 <div class="rev-track">
 <article class="rev active"><h4>Sam R.</h4><div class="muted">Operations Lead, Acme</div><div class="stars">★★★★★</div><div class="muted" style="font-weight:700;letter-spacing:.07em">IMPROVEMENT TOOLS</div><p>Adrian’s tiny tools saved our team hours each week. Clear docs too.</p></article>
 <article class="rev"><h4>Priya K.</h4><div class="muted">Founder, Bright Clinic</div><div class="stars">★★★★★</div><div class="muted" style="font-weight:700;letter-spacing:.07em">SMALL WEBSITE</div><p>Our mini‑site is fast, tidy, and easy to update. Exactly what we needed.</p></article>
@@ -107,7 +107,24 @@ textarea{resize:none;overflow:auto}
   function tick(){ if(scrollY<=2) promo.classList.remove('hidden'); else promo.classList.add('hidden'); }
   tick(); addEventListener('scroll', tick, {passive:true});
 })();
-;
+(function(){
+  const viewport = document.querySelector('.reviews .rev-viewport');
+  const track = document.querySelector('.reviews .rev-track');
+  if(!viewport || !track) return;
+  const cards = Array.from(track.querySelectorAll('.rev'));
+  const prev = document.querySelector('.reviews .rev-prev');
+  const next = document.querySelector('.reviews .rev-next');
+  let i=0, gap=24;
+  function cardW(){ return cards[0].getBoundingClientRect().width; }
+  function set(){ const cw=cardW(), vpw=viewport.clientWidth, center=(vpw-cw)/2;
+    track.style.transform = `translateX(${(-i*(cw+gap)+center)}px)`;
+    cards.forEach((c,idx)=>c.classList.toggle('active', idx===i));
+  }
+  function go(n){ i=(n+cards.length)%cards.length; set(); }
+  prev && prev.addEventListener('click', ()=>go(i-1));
+  next && next.addEventListener('click', ()=>go(i+1));
+  addEventListener('resize', set); set(); setInterval(()=>go(i+1), 6000);
+})();
 document.addEventListener('DOMContentLoaded', function(){
   const links = Array.from(document.querySelectorAll('.lb-link'));
   if(!links.length) return;

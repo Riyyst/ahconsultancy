@@ -7,54 +7,30 @@ function onScroll(){ if(scrollY>10) document.body.classList.add('scrolled'); els
 onScroll(); addEventListener('scroll', onScroll, {passive:true});
 
 // 3) Reviews carousel: center one, peek neighbors, working arrows
-
 (function(){
   const viewport = document.querySelector('.rev-viewport');
   const track = document.querySelector('.rev-track');
   if(!viewport || !track) return;
-  const slides = Array.from(track.querySelectorAll('.rev'));
-  if(!slides.length) return;
-
-  let index = 0;
-  let timer = null;
-
-  function xFor(i){
-    const prev = track.style.transform;
-    track.style.transform = 'translate3d(0,0,0)';
-    const vp = viewport.getBoundingClientRect();
-    const sl = slides[i].getBoundingClientRect();
-    const x = (vp.left + vp.width/2) - (sl.left + sl.width/2);
-    track.style.transform = prev || '';
-    return x;
+  const cards = Array.from(track.querySelectorAll('.rev'));
+  let idx = 0;
+  const gap = 24;
+  function cardWidth(){ return cards[0].getBoundingClientRect().width; }
+  function set(){
+    const cw = cardWidth();
+    const vpw = viewport.clientWidth;
+    const centerOffset = (vpw - cw)/2;
+    const x = -idx*(cw+gap) + centerOffset;
+    track.style.transform = `translateX(${x}px)`;
+    cards.forEach((c,i)=>c.classList.toggle('active', i===idx));
   }
-  function apply(i){
-    track.style.transform = `translate3d(${xFor(i)}px,0,0)`;
-    slides.forEach((s,k)=>s.classList.toggle('active', k===i));
-  }
-  function go(n){ index = (n + slides.length) % slides.length; apply(index); }
-
-  document.querySelector('.rev-next')?.addEventListener('click', ()=>{ go(index+1); restart(); });
-  document.querySelector('.rev-prev')?.addEventListener('click', ()=>{ go(index-1); restart(); });
-
-  // swipe
-  let sx=null,id=null;
-  track.addEventListener('pointerdown', e=>{ sx=e.clientX; id=e.pointerId; track.setPointerCapture(id); });
-  track.addEventListener('pointerup', e=>{
-    if(sx==null) return;
-    const dx=e.clientX - sx;
-    if(Math.abs(dx)>40) go(index + (dx<0?1:-1));
-    sx=null; id=null; restart();
-  });
-
-  if('ResizeObserver' in window){ new ResizeObserver(()=>apply(index)).observe(viewport); }
-  else { addEventListener('resize', ()=>apply(index)); addEventListener('orientationchange', ()=>apply(index)); }
-
-  function play(){ timer = setInterval(()=>go(index+1), 6000); }
-  function restart(){ if(timer){ clearInterval(timer); } play(); }
-
-  requestAnimationFrame(()=>{ apply(0); play(); });
-})()
-;
+  function next(){ idx = (idx+1)%cards.length; set(); }
+  function prev(){ idx = (idx-1+cards.length)%cards.length; set(); }
+  document.querySelector('.rev-next')?.addEventListener('click', next);
+  document.querySelector('.rev-prev')?.addEventListener('click', prev);
+  addEventListener('resize', set);
+  set();
+  setInterval(next, 6000);
+})();
 
 // 4) Service page lightbox viewer
 (function(){
