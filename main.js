@@ -12,53 +12,59 @@ onScroll(); addEventListener('scroll', onScroll, {passive:true});
   const viewport = document.querySelector('.rev-viewport');
   const track = document.querySelector('.rev-track');
   if(!viewport || !track) return;
-  const cards = Array.from(track.querySelectorAll('.rev'));
-  let idx = 0;
-  const gap = 24;
+  const slides = Array.from(track.querySelectorAll('.rev'));
+  if(!slides.length) return;
 
-  function cardWidth(){ return cards[0].getBoundingClientRect().width; }
-  function set(){
-    const cw = cardWidth();
-    const vpw = viewport.clientWidth;
-    const centerOffset = (vpw - cw)/2;
-    const x = -idx*(cw+gap) + centerOffset;
-    track.style.transform = `translateX(${x}px)`;
-    cards.forEach((c,i)=>c.classList.toggle('active', i===idx));
+  let index = 0;
+  let timer = null;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function getCurrentX(){
+    const style = getComputedStyle(track);
+    const m = new DOMMatrixReadOnly(style.transform === 'none' ? undefined : style.transform);
+    return m.m41; // translateX
   }
-  function go(n){ idx = (n+cards.length)%cards.length; set(); }
+  function center(i){
+    const vp = viewport.getBoundingClientRect();
+    const target = slides[i].getBoundingClientRect();
+    const current = getCurrentX();
+    const delta = (target.left + target.width/2) - (vp.left + vp.width/2);
+    track.style.transform = `translateX(${current - delta}px)`;
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+  }
+  function goTo(i){
+    index = (i + slides.length) % slides.length;
+    center(index);
+  }
 
   const nextBtn = document.querySelector('.rev-next');
   const prevBtn = document.querySelector('.rev-prev');
-  nextBtn && nextBtn.addEventListener('click', ()=>{ go(idx+1); stopStart(); });
-  prevBtn && prevBtn.addEventListener('click', ()=>{ go(idx-1); stopStart(); });
+  nextBtn && nextBtn.addEventListener('click', () => { goTo(index+1); restart(); });
+  prevBtn && prevBtn.addEventListener('click', () => { goTo(index-1); restart(); });
 
-  // Pointer swipe (basic)
-  let startX = null, trackingId=null;
-  track.addEventListener('pointerdown', e => {
-    startX = e.clientX; trackingId = e.pointerId; track.setPointerCapture(trackingId);
-  });
+  // basic swipe
+  let sx = null, id = null;
+  track.addEventListener('pointerdown', e => { sx = e.clientX; id=e.pointerId; track.setPointerCapture(id); });
   track.addEventListener('pointerup', e => {
-    if(startX==null) return;
-    const dx = e.clientX - startX;
-    if(Math.abs(dx) > 40){ go(idx + (dx < 0 ? 1 : -1)); }
-    startX = null; trackingId = null; stopStart();
+    if(sx==null) return;
+    const dx = e.clientX - sx;
+    if(Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
+    sx = null; id=null; restart();
   });
 
-  // Resize / orientation
+  // resize
   if('ResizeObserver' in window){
-    new ResizeObserver(()=>set()).observe(viewport);
+    new ResizeObserver(() => center(index)).observe(viewport);
   }else{
-    addEventListener('resize', set);
-    addEventListener('orientationchange', set);
+    addEventListener('resize', () => center(index));
+    addEventListener('orientationchange', () => center(index));
   }
-  set();
 
-  // Autoplay with prefers-reduced-motion
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let timer = null;
-  function play(){ if(reduce) return; timer = setInterval(()=>go(idx+1), 6000); }
-  function stopStart(){ if(timer){ clearInterval(timer); } play(); }
-  play();
+  function play(){ if(reduce) return; timer = setInterval(() => goTo(index+1), 6000); }
+  function restart(){ if(timer){ clearInterval(timer); } play(); }
+
+  // init after layout
+  requestAnimationFrame(() => { center(0); play(); });
 })()
 ;
 
