@@ -17,54 +17,42 @@ onScroll(); addEventListener('scroll', onScroll, {passive:true});
 
   let index = 0;
   let timer = null;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function getCurrentX(){
-    const style = getComputedStyle(track);
-    const m = new DOMMatrixReadOnly(style.transform === 'none' ? undefined : style.transform);
-    return m.m41; // translateX
-  }
-  function center(i){
+  function xFor(i){
+    const prev = track.style.transform;
+    track.style.transform = 'translate3d(0,0,0)';
     const vp = viewport.getBoundingClientRect();
-    const target = slides[i].getBoundingClientRect();
-    const current = getCurrentX();
-    const delta = (target.left + target.width/2) - (vp.left + vp.width/2);
-    track.style.transform = `translateX(${current - delta}px)`;
-    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    const sl = slides[i].getBoundingClientRect();
+    const x = (vp.left + vp.width/2) - (sl.left + sl.width/2);
+    track.style.transform = prev || '';
+    return x;
   }
-  function goTo(i){
-    index = (i + slides.length) % slides.length;
-    center(index);
+  function apply(i){
+    track.style.transform = `translate3d(${xFor(i)}px,0,0)`;
+    slides.forEach((s,k)=>s.classList.toggle('active', k===i));
   }
+  function go(n){ index = (n + slides.length) % slides.length; apply(index); }
 
-  const nextBtn = document.querySelector('.rev-next');
-  const prevBtn = document.querySelector('.rev-prev');
-  nextBtn && nextBtn.addEventListener('click', () => { goTo(index+1); restart(); });
-  prevBtn && prevBtn.addEventListener('click', () => { goTo(index-1); restart(); });
+  document.querySelector('.rev-next')?.addEventListener('click', ()=>{ go(index+1); restart(); });
+  document.querySelector('.rev-prev')?.addEventListener('click', ()=>{ go(index-1); restart(); });
 
-  // basic swipe
-  let sx = null, id = null;
-  track.addEventListener('pointerdown', e => { sx = e.clientX; id=e.pointerId; track.setPointerCapture(id); });
-  track.addEventListener('pointerup', e => {
+  // swipe
+  let sx=null,id=null;
+  track.addEventListener('pointerdown', e=>{ sx=e.clientX; id=e.pointerId; track.setPointerCapture(id); });
+  track.addEventListener('pointerup', e=>{
     if(sx==null) return;
-    const dx = e.clientX - sx;
-    if(Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
-    sx = null; id=null; restart();
+    const dx=e.clientX - sx;
+    if(Math.abs(dx)>40) go(index + (dx<0?1:-1));
+    sx=null; id=null; restart();
   });
 
-  // resize
-  if('ResizeObserver' in window){
-    new ResizeObserver(() => center(index)).observe(viewport);
-  }else{
-    addEventListener('resize', () => center(index));
-    addEventListener('orientationchange', () => center(index));
-  }
+  if('ResizeObserver' in window){ new ResizeObserver(()=>apply(index)).observe(viewport); }
+  else { addEventListener('resize', ()=>apply(index)); addEventListener('orientationchange', ()=>apply(index)); }
 
-  function play(){ if(reduce) return; timer = setInterval(() => goTo(index+1), 6000); }
+  function play(){ timer = setInterval(()=>go(index+1), 6000); }
   function restart(){ if(timer){ clearInterval(timer); } play(); }
 
-  // init after layout
-  requestAnimationFrame(() => { center(0); play(); });
+  requestAnimationFrame(()=>{ apply(0); play(); });
 })()
 ;
 

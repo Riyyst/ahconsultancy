@@ -186,5 +186,14 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
   }
 }
 
-/* Reviews track perf hint */
-.reviews .rev-track{ will-change: transform; }
+/* Reviews mobile hard override */
+@media (max-width: 1024px){
+  .reviews .rev-viewport{ overflow: hidden; position: relative; }
+  .reviews .rev-track{
+    margin: 0 !important;
+    will-change: transform;
+    transition: transform .5s ease;
+    touch-action: pan-y;
+  }
+  .reviews .rev-ctrl:focus:not(:focus-visible){ outline: none; }
+}
