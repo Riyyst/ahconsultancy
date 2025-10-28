@@ -164,3 +164,55 @@ function __setMarginLeftImportant__(el, px){
   }
   requestAnimationFrame(function(){ slideTo(index); });
 })();
+
+
+
+// === Mobile reviews: viewport-scroll carousel (one card, always moves) ===
+(function(){
+  var root = document.querySelector('.reviews');
+  if(!root) return;
+  var viewport = root.querySelector('.rev-viewport');
+  var track = root.querySelector('.rev-track');
+  if(!viewport || !track) return;
+  var cards = Array.from(track.children);
+  var ctrls = root.querySelectorAll('.rev-ctrl');
+  var prevBtn = ctrls && ctrls.length ? ctrls[0] : null;
+  var nextBtn = ctrls && ctrls.length > 1 ? ctrls[1] : null;
+  if(cards.length === 0) return;
+
+  var index = 0;
+
+  function gap(){
+    var s = window.getComputedStyle(track);
+    return parseFloat(s.gap || s.columnGap || '24') || 24;
+  }
+  function cardWidth(){
+    // one card equals its laid-out width
+    return cards[0].getBoundingClientRect().width;
+  }
+  function clamp(i){ return Math.max(0, Math.min(i, cards.length - 1)); }
+
+  function scrollToIndex(i){
+    index = clamp(i);
+    var left = index * (cardWidth() + gap());
+    viewport.scrollTo({ left: left, behavior: 'smooth' });
+  }
+
+  function handlePrev(){ scrollToIndex(index - 1); }
+  function handleNext(){ scrollToIndex(index + 1); }
+
+  if(prevBtn) prevBtn.addEventListener('click', handlePrev, {passive:true});
+  if(nextBtn) nextBtn.addEventListener('click', handleNext, {passive:true});
+
+  // keep position correct on resize/orientation
+  function reset(){ scrollToIndex(index); }
+  if('ResizeObserver' in window){
+    new ResizeObserver(reset).observe(viewport);
+  }else{
+    window.addEventListener('resize', reset);
+    window.addEventListener('orientationchange', reset);
+  }
+
+  // Initial alignment
+  requestAnimationFrame(reset);
+})();

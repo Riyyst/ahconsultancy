@@ -357,3 +357,35 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
     transform: translateY(-50%) !important;
   }
 }
+
+
+/* === Mobile reviews: single-card view using viewport scroll (bulletproof) === */
+@media (max-width: 768px){
+  .reviews .rev-viewport{
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch;
+    padding-left: 12px !important;   /* half of 24px gap */
+    padding-right: 12px !important;
+    scrollbar-width: none;           /* Firefox */
+  }
+  .reviews .rev-viewport::-webkit-scrollbar{ display:none; } /* WebKit */
+  .reviews .rev-track{
+    display: flex !important;
+    gap: 24px !important;            /* must match JS */
+    width: auto !important;
+    margin: 0 !important;
+    justify-content: flex-start !important;
+    transition: none !important;     /* JS moves viewport, not track */
+  }
+  .reviews .rev{
+    flex: 0 0 calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 0 !important;
+  }
+  .reviews .rev-ctrl{
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+}
