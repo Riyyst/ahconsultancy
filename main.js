@@ -168,3 +168,55 @@ onScroll(); addEventListener('scroll', onScroll, {passive:true});
   // Initial position
   requestAnimationFrame(function(){ slideTo(index); });
 })();
+\n
+
+// === Force-transform helper: set translateX with !important so CSS can't cancel it ===
+function __setTranslateXImportant__(el, px){
+  try{
+    el.style.setProperty('transform', 'translateX(' + px + 'px)', 'important');
+  }catch(e){
+    el.style.transform = 'translateX(' + px + 'px)'; // fallback
+  }
+}
+\n
+
+// === Mobile reviews: robust & forced motion (gap-aware, resize-safe) ===
+(function(){
+  var root = document.querySelector('.reviews');
+  if(!root) return;
+  var viewport = root.querySelector('.rev-viewport');
+  var track = root.querySelector('.rev-track');
+  var cards = track ? Array.from(track.children) : [];
+  var ctrls = root.querySelectorAll('.rev-ctrl');
+  var prevBtn = ctrls && ctrls.length ? ctrls[0] : null;
+  var nextBtn = ctrls && ctrls.length > 1 ? ctrls[1] : null;
+  if(!viewport || !track || cards.length === 0) return;
+
+  var index = 0;
+  function getGap(){
+    var s = window.getComputedStyle(track);
+    var g = parseFloat(s.gap || s.columnGap || '24') || 24;
+    return g;
+  }
+  function cardWidth(){ return cards[0].getBoundingClientRect().width; }
+  function maxIndex(){ return Math.max(0, cards.length - 1); }
+
+  function slideTo(i){
+    index = Math.max(0, Math.min(i, maxIndex()));
+    var offset = -index * (cardWidth() + getGap());
+    __setTranslateXImportant__(track, offset);
+  }
+  function handlePrev(){ slideTo(index - 1); }
+  function handleNext(){ slideTo(index + 1); }
+
+  if(prevBtn) prevBtn.addEventListener('click', handlePrev, {passive:true});
+  if(nextBtn) nextBtn.addEventListener('click', handleNext, {passive:true});
+
+  if('ResizeObserver' in window){
+    new ResizeObserver(function(){ slideTo(index); }).observe(viewport);
+  }else{
+    window.addEventListener('resize', function(){ slideTo(index); });
+    window.addEventListener('orientationchange', function(){ slideTo(index); });
+  }
+  requestAnimationFrame(function(){ slideTo(index); });
+})();

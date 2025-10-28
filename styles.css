@@ -365,3 +365,11 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
   .reviews .rev-track{ display:flex; width:auto; margin:0; gap:24px; transition: transform .5s ease; justify-content:flex-start; }
   .reviews .rev{ flex:0 0 calc(100% - 24px); max-width: calc(100% - 24px); margin:0; }
 }
+
+
+/* === One-card view guard (mobile) === */
+@media (max-width: 768px){
+  .reviews .rev-viewport{ overflow:hidden; padding: 12px; padding-top:0; padding-bottom:0; }
+  .reviews .rev-track{ display:flex; width:auto; margin:0; gap:24px; transition: transform .5s ease; justify-content:flex-start; }
+  .reviews .rev{ flex:0 0 calc(100% - 24px); max-width: calc(100% - 24px); margin:0; }
+}
