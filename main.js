@@ -110,3 +110,61 @@ onScroll(); addEventListener('scroll', onScroll, {passive:true});
     if(e.key === 'ArrowRight'){ e.preventDefault(); next && next.click(); }
   });
 })();
+
+
+
+// === Mobile reviews: robust slider width calc (no stale transforms) ===
+(function(){
+  var root = document.querySelector('.reviews');
+  if(!root) return;
+  var viewport = root.querySelector('.rev-viewport');
+  var track = root.querySelector('.rev-track');
+  var cards = track ? Array.from(track.children) : [];
+  var prevBtn = root.querySelector('.rev-ctrl[data-dir="prev"], .rev-ctrl.prev, .rev-ctrl--prev') || root.querySelectorAll('.rev-ctrl')[0];
+  var nextBtn = root.querySelector('.rev-ctrl[data-dir="next"], .rev-ctrl.next, .rev-ctrl--next') || root.querySelectorAll('.rev-ctrl')[1];
+  if(!viewport || !track || cards.length === 0) return;
+
+  var index = 0;
+
+  function getGap(){
+    var s = window.getComputedStyle(track);
+    var g = parseFloat(s.gap || s.columnGap || '24') || 24;
+    return g;
+  }
+
+  function cardWidth(){
+    // measure the first fully laid-out card
+    return cards[0].getBoundingClientRect().width;
+  }
+
+  function maxIndex(){
+    return Math.max(0, cards.length - 1);
+  }
+
+  function slideTo(i){
+    index = Math.max(0, Math.min(i, maxIndex()));
+    var w = cardWidth();
+    var gap = getGap();
+    var offset = -index * (w + gap);
+    track.style.transform = 'translateX(' + offset + 'px)';
+  }
+
+  function handlePrev(){ slideTo(index - 1); }
+  function handleNext(){ slideTo(index + 1); }
+
+  if(prevBtn && prevBtn.addEventListener) prevBtn.addEventListener('click', handlePrev);
+  if(nextBtn && nextBtn.addEventListener) nextBtn.addEventListener('click', handleNext);
+
+  // Recalculate on resize / orientation change
+  var ro;
+  if('ResizeObserver' in window){
+    ro = new ResizeObserver(function(){ slideTo(index); });
+    ro.observe(viewport);
+  } else {
+    window.addEventListener('resize', function(){ slideTo(index); });
+    window.addEventListener('orientationchange', function(){ slideTo(index); });
+  }
+
+  // Initial position
+  requestAnimationFrame(function(){ slideTo(index); });
+})();

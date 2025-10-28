@@ -187,56 +187,9 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
 }
 
 
-/* === Mobile reviews: scale card to fit with side breathing room (keeps smooth slide) === */
+/* === Ensure one-card view & smooth sliding on mobile (JS-driven) === */
 @media (max-width: 768px){
-  .reviews .rev-viewport{
-    overflow: hidden;
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-  .reviews .rev-track{
-    display: flex !important;
-    gap: 24px !important;
-    width: auto !important;
-    margin: 0 !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
-    transition: transform .5s ease !important;
-  }
-  .reviews .rev{
-    flex: 0 0 calc(100% - 24px) !important;
-    max-width: calc(100% - 24px) !important;
-    margin: 0 auto !important;
-    transform-origin: center center;
-  }
-}
-@media (max-width: 400px){
-}
-
-/* === Mobile reviews: one card, centred, smooth slide (no scaling) === */
-@media (max-width: 768px){
-  .reviews .rev-viewport{
-    overflow: hidden;
-    padding-left: 12px;  /* half of 24px gap */
-    padding-right: 12px;
-  }
-  .reviews .rev-track{
-    display: flex !important;
-    gap: 24px !important;
-    width: auto !important;
-    margin: 0 !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
-    transition: transform .5s ease !important;
-    /* No transform override: JS sets translateX(...) */
-  }
-  .reviews .rev{
-    flex: 0 0 calc(100% - 24px) !important;
-    max-width: calc(100% - 24px) !important;
-    margin: 0 auto !important;
-  }
-  .reviews .rev-ctrl{
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-  }
+  .reviews .rev-viewport{ overflow:hidden; padding: 12px; padding-top: 0; padding-bottom: 0; }
+  .reviews .rev-track{ display:flex; width:auto; margin:0; gap:24px; transition: transform .5s ease; justify-content:flex-start; }
+  .reviews .rev{ flex:0 0 calc(100% - 24px); max-width: calc(100% - 24px); margin:0; }
 }
