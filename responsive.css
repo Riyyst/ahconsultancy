@@ -172,8 +172,8 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
     align-items: stretch !important;
     width: 100% !important;
     margin: 0 auto !important;
-    transform: none !important;
-    transition: none !important;
+    /* removed: transform none !important */
+    /* removed: transition none !important */
   }
   .reviews .rev{
     flex: 0 0 100% !important;
@@ -213,4 +213,18 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
     top: 50% !important;
     transform: translateY(-50%) !important;
   }
+}
+
+
+/* === Safety: mobile carousel uses JS transform; do not block movement === */
+@media (max-width: 768px){
+  .reviews .rev-viewport{ overflow:hidden; padding:0 12px; }
+  .reviews .rev-track{
+    display:flex; gap:0; width:auto; margin:0;
+    justify-content:flex-start; align-items:stretch;
+    transition: transform .5s ease;
+    /* No transform here; JS sets translateX(...) */
+  }
+  .reviews .rev{ flex:0 0 100%; max-width:100%; margin:0; }
+  .reviews .rev-ctrl{ top:50%; transform:translateY(-50%); }
 }
