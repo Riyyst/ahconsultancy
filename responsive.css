@@ -172,8 +172,8 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
     align-items: stretch !important;
     width: 100% !important;
     margin: 0 auto !important;
-    transform: none !important;
-    transition: none !important;
+    
+    
   }
   .reviews .rev{
     flex: 0 0 100% !important;
@@ -185,3 +185,6 @@ footer { padding-bottom: max(16px, var(--safe-bottom)); }
     transform: translateY(-50%) !important;
   }
 }
+
+/* Reviews track perf hint */
+.reviews .rev-track{ will-change: transform; }

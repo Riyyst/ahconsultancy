@@ -7,6 +7,7 @@ function onScroll(){ if(scrollY>10) document.body.classList.add('scrolled'); els
 onScroll(); addEventListener('scroll', onScroll, {passive:true});
 
 // 3) Reviews carousel: center one, peek neighbors, working arrows
+
 (function(){
   const viewport = document.querySelector('.rev-viewport');
   const track = document.querySelector('.rev-track');
@@ -14,6 +15,7 @@ onScroll(); addEventListener('scroll', onScroll, {passive:true});
   const cards = Array.from(track.querySelectorAll('.rev'));
   let idx = 0;
   const gap = 24;
+
   function cardWidth(){ return cards[0].getBoundingClientRect().width; }
   function set(){
     const cw = cardWidth();
@@ -23,14 +25,42 @@ onScroll(); addEventListener('scroll', onScroll, {passive:true});
     track.style.transform = `translateX(${x}px)`;
     cards.forEach((c,i)=>c.classList.toggle('active', i===idx));
   }
-  function next(){ idx = (idx+1)%cards.length; set(); }
-  function prev(){ idx = (idx-1+cards.length)%cards.length; set(); }
-  document.querySelector('.rev-next')?.addEventListener('click', next);
-  document.querySelector('.rev-prev')?.addEventListener('click', prev);
-  addEventListener('resize', set);
+  function go(n){ idx = (n+cards.length)%cards.length; set(); }
+
+  const nextBtn = document.querySelector('.rev-next');
+  const prevBtn = document.querySelector('.rev-prev');
+  nextBtn && nextBtn.addEventListener('click', ()=>{ go(idx+1); stopStart(); });
+  prevBtn && prevBtn.addEventListener('click', ()=>{ go(idx-1); stopStart(); });
+
+  // Pointer swipe (basic)
+  let startX = null, trackingId=null;
+  track.addEventListener('pointerdown', e => {
+    startX = e.clientX; trackingId = e.pointerId; track.setPointerCapture(trackingId);
+  });
+  track.addEventListener('pointerup', e => {
+    if(startX==null) return;
+    const dx = e.clientX - startX;
+    if(Math.abs(dx) > 40){ go(idx + (dx < 0 ? 1 : -1)); }
+    startX = null; trackingId = null; stopStart();
+  });
+
+  // Resize / orientation
+  if('ResizeObserver' in window){
+    new ResizeObserver(()=>set()).observe(viewport);
+  }else{
+    addEventListener('resize', set);
+    addEventListener('orientationchange', set);
+  }
   set();
-  setInterval(next, 6000);
-})();
+
+  // Autoplay with prefers-reduced-motion
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timer = null;
+  function play(){ if(reduce) return; timer = setInterval(()=>go(idx+1), 6000); }
+  function stopStart(){ if(timer){ clearInterval(timer); } play(); }
+  play();
+})()
+;
 
 // 4) Service page lightbox viewer
 (function(){
