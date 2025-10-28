@@ -110,77 +110,20 @@ onScroll(); addEventListener('scroll', onScroll, {passive:true});
     if(e.key === 'ArrowRight'){ e.preventDefault(); next && next.click(); }
   });
 })();
-
-
-
-// === Mobile reviews: robust slider width calc (no stale transforms) ===
-(function(){
-  var root = document.querySelector('.reviews');
-  if(!root) return;
-  var viewport = root.querySelector('.rev-viewport');
-  var track = root.querySelector('.rev-track');
-  var cards = track ? Array.from(track.children) : [];
-  var prevBtn = root.querySelector('.rev-ctrl[data-dir="prev"], .rev-ctrl.prev, .rev-ctrl--prev') || root.querySelectorAll('.rev-ctrl')[0];
-  var nextBtn = root.querySelector('.rev-ctrl[data-dir="next"], .rev-ctrl.next, .rev-ctrl--next') || root.querySelectorAll('.rev-ctrl')[1];
-  if(!viewport || !track || cards.length === 0) return;
-
-  var index = 0;
-
-  function getGap(){
-    var s = window.getComputedStyle(track);
-    var g = parseFloat(s.gap || s.columnGap || '24') || 24;
-    return g;
-  }
-
-  function cardWidth(){
-    // measure the first fully laid-out card
-    return cards[0].getBoundingClientRect().width;
-  }
-
-  function maxIndex(){
-    return Math.max(0, cards.length - 1);
-  }
-
-  function slideTo(i){
-    index = Math.max(0, Math.min(i, maxIndex()));
-    var w = cardWidth();
-    var gap = getGap();
-    var offset = -index * (w + gap);
-    track.style.transform = 'translateX(' + offset + 'px)';
-  }
-
-  function handlePrev(){ slideTo(index - 1); }
-  function handleNext(){ slideTo(index + 1); }
-
-  if(prevBtn && prevBtn.addEventListener) prevBtn.addEventListener('click', handlePrev);
-  if(nextBtn && nextBtn.addEventListener) nextBtn.addEventListener('click', handleNext);
-
-  // Recalculate on resize / orientation change
-  var ro;
-  if('ResizeObserver' in window){
-    ro = new ResizeObserver(function(){ slideTo(index); });
-    ro.observe(viewport);
-  } else {
-    window.addEventListener('resize', function(){ slideTo(index); });
-    window.addEventListener('orientationchange', function(){ slideTo(index); });
-  }
-
-  // Initial position
-  requestAnimationFrame(function(){ slideTo(index); });
-})();
 \n
 
-// === Force-transform helper: set translateX with !important so CSS can't cancel it ===
+// === Forced motion helpers ===
 function __setTranslateXImportant__(el, px){
-  try{
-    el.style.setProperty('transform', 'translateX(' + px + 'px)', 'important');
-  }catch(e){
-    el.style.transform = 'translateX(' + px + 'px)'; // fallback
-  }
+  try{ el.style.setProperty('transform', 'translateX(' + px + 'px)', 'important'); }
+  catch(e){ el.style.transform = 'translateX(' + px + 'px)'; }
+}
+function __setMarginLeftImportant__(el, px){
+  try{ el.style.setProperty('margin-left', px + 'px', 'important'); }
+  catch(e){ el.style.marginLeft = px + 'px'; }
 }
 \n
 
-// === Mobile reviews: robust & forced motion (gap-aware, resize-safe) ===
+// === Mobile reviews: dual-motion (transform + margin-left) ===
 (function(){
   var root = document.querySelector('.reviews');
   if(!root) return;
@@ -199,18 +142,19 @@ function __setTranslateXImportant__(el, px){
     return g;
   }
   function cardWidth(){ return cards[0].getBoundingClientRect().width; }
-  function maxIndex(){ return Math.max(0, cards.length - 1); }
+  function clamp(i){ return Math.max(0, Math.min(i, cards.length - 1)); }
 
-  function slideTo(i){
-    index = Math.max(0, Math.min(i, maxIndex()));
-    var offset = -index * (cardWidth() + getGap());
-    __setTranslateXImportant__(track, offset);
+  function applyOffset(px){
+    __setTranslateXImportant__(track, px);
+    __setMarginLeftImportant__(track, px);
   }
-  function handlePrev(){ slideTo(index - 1); }
-  function handleNext(){ slideTo(index + 1); }
-
-  if(prevBtn) prevBtn.addEventListener('click', handlePrev, {passive:true});
-  if(nextBtn) nextBtn.addEventListener('click', handleNext, {passive:true});
+  function slideTo(i){
+    index = clamp(i);
+    var offset = -index * (cardWidth() + getGap());
+    applyOffset(offset);
+  }
+  if(prevBtn) prevBtn.addEventListener('click', function(){ slideTo(index-1); }, {passive:true});
+  if(nextBtn) nextBtn.addEventListener('click', function(){ slideTo(index+1); }, {passive:true});
 
   if('ResizeObserver' in window){
     new ResizeObserver(function(){ slideTo(index); }).observe(viewport);
