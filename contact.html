@@ -25,14 +25,12 @@ textarea{resize:none;overflow:auto}
 .reviews .rev-ctrl{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:4px solid rgba(191,161,57,.55);width:44px;height:44px;border-radius:12px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);z-index:2}
 .reviews .rev-prev{left:8px}.reviews .rev-next{right:8px}
 
-/* === Contact form tweaks (Mk74 user request) === */
+/* === Contact form hardening (Mk74) === */
 #ahc-contact-form.disabled,
 #ahc-contact-form.disabled * { cursor: not-allowed !important; }
-
 #ahc-contact-form input,
 #ahc-contact-form textarea,
 #ahc-contact-form select { font-family: inherit; }
-
 #ahc-contact-form .btn {
   width: 100%;
   display: block;
@@ -62,24 +60,24 @@ textarea{resize:none;overflow:auto}
 <p><a class="btn" href="https://cal.com/adrian.headley/10min" rel="noopener" target="_blank">Book time to have a call</a></p>
 <div class="or-sep"><span class="muted">or</span></div>
 <h2>Send me an email</h2>
-<div id="turnstile-widget" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" data-appearance="interaction-only" style="margin:0.75rem 0;text-align:center;"></div>
-<form id="ahc-contact-form" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;">
+<div id="turnstile-widget" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-appearance="interaction-only" style="margin:0.75rem 0;text-align:center;"></div>
+<form id="ahc-contact-form" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;" class="disabled">
 <label>Full name <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<input name="name" placeholder="Full name" required type="text"/>
+<input name="name" placeholder="Full name" required type="text" disabled/>
 
 <label>Business/Organisation name</label>
-<input name="organisation" placeholder="Business/Organisation (optional)" type="text"/>
+<input name="organisation" placeholder="Business/Organisation (optional)" type="text" disabled/>
 
 <label>Email <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<input name="from_email" placeholder="you@company.com" required type="email"/>
+<input name="from_email" placeholder="you@company.com" required type="email" disabled/>
 
 <label>Phone number</label>
-<input name="phone" placeholder="Phone number (optional)" type="tel"/>
+<input name="phone" placeholder="Phone number (optional)" type="tel" disabled/>
 
 <div aria-hidden="true" style="height:8px"></div>
 
 <label>Subject <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<select name="subject" required style="width:100%;border-radius:12px;border:4px solid rgba(191,161,57,.55);background:rgba(255,255,255,.75);padding:12px 14px;font-size:16px;outline:none">
+<select name="subject" required disabled style="width:100%;border-radius:12px;border:4px solid rgba(191,161,57,.55);background:rgba(255,255,255,.75);padding:12px 14px;font-size:16px;outline:none">
   <option value="" disabled selected>Select a subject</option>
   <option>Process Tools</option>
   <option>Small Website Setup</option>
@@ -91,9 +89,9 @@ textarea{resize:none;overflow:auto}
 </select>
 
 <label>Message <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<textarea style="font-size:16px" name="message" placeholder="Tell me what you’d like to achieve…" rows="8" required></textarea>
+<textarea name="message" placeholder="Tell me what you’d like to achieve…" rows="8" required disabled style="font-size:16px"></textarea>
 
-<button class="btn" type="submit">Send</button>
+<button class="btn" type="submit" disabled>Send</button>
 <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;">
   <label>Company <input autocomplete="off" name="company" tabindex="-1" type="text"/></label>
 </div>
@@ -121,87 +119,18 @@ textarea{resize:none;overflow:auto}
 </div>
 </div>
 
-<script>
-(function() {
-  var verified = false;
-  window.onTurnstileSuccess = function(token) { verified = true; };
-  var start = Date.now();
-  document.addEventListener("DOMContentLoaded", function() {
-    var form = document.querySelector("form[action^='https://formspree.io/f/']");
-    if(!form) return;
-    var status = document.getElementById("form-status");
-    form.addEventListener("submit", function(ev) {
-      // check honeypot
-      var hp = form.querySelector("input[name='company']");
-      if (hp && hp.value.trim().length > 0) { ev.preventDefault(); if(status) status.textContent="Submission blocked by anti-spam checks."; return false; }
-      // min fill time
-      if (Date.now() - start < 5000) { ev.preventDefault(); if(status) status.textContent="Please review your message before sending."; return false; }
-      // turnstile verified
-      if (!verified) { ev.preventDefault(); if(status) status.textContent="Please complete the security check (I'm not a robot)."; return false; }
-      if(status) status.textContent="Sending…";
-    });
-  });
-})();
-</script>
 
-<script>
-(function(){
-  const promo = document.getElementById('promo');
-  if(!promo) return;
-  function tick(){ if(scrollY<=2) promo.classList.remove('hidden'); else promo.classList.add('hidden'); }
-  tick(); addEventListener('scroll', tick, {passive:true});
-})();
-(function(){
-  const viewport = document.querySelector('.reviews .rev-viewport');
-  const track = document.querySelector('.reviews .rev-track');
-  if(!viewport || !track) return;
-  const cards = Array.from(track.querySelectorAll('.rev'));
-  const prev = document.querySelector('.reviews .rev-prev');
-  const next = document.querySelector('.reviews .rev-next');
-  let i=0, gap=24;
-  function cardW(){ return cards[0].getBoundingClientRect().width; }
-  function set(){ const cw=cardW(), vpw=viewport.clientWidth, center=(vpw-cw)/2;
-    track.style.transform = `translateX(${(-i*(cw+gap)+center)}px)`;
-    cards.forEach((c,idx)=>c.classList.toggle('active', idx===i));
-  }
-  function go(n){ i=(n+cards.length)%cards.length; set(); }
-  prev && prev.addEventListener('click', ()=>go(i-1));
-  next && next.addEventListener('click', ()=>go(i+1));
-  addEventListener('resize', set); set(); setInterval(()=>go(i+1), 6000);
-})();
-document.addEventListener('DOMContentLoaded', function(){
-  const links = Array.from(document.querySelectorAll('.lb-link'));
-  if(!links.length) return;
-  const lb = document.querySelector('.lightbox');
-  const media = lb.querySelector('.lb-media');
-  const bClose = lb.querySelector('.lb-close');
-  const bPrev = lb.querySelector('.lb-prev');
-  const bNext = lb.querySelector('.lb-next');
-  let idx=0;
-  function open(k){ idx=k; media.style.backgroundImage=`url('${links[idx].dataset.image}')`; lb.classList.add('open'); }
-  function close(){ lb.classList.remove('open'); }
-  function next(){ idx=(idx+1)%links.length; open(idx); }
-  function prev(){ idx=(idx-1+links.length)%links.length; open(idx); }
-  links.forEach((a,i)=>{ a.style.cursor='pointer'; a.addEventListener('click', e=>{e.preventDefault(); open(i);}); });
-  bClose.addEventListener('click', close); bNext.addEventListener('click', next); bPrev.addEventListener('click', prev);
-  lb.addEventListener('click', e=>{ if(e.target===lb) close(); });
-  document.addEventListener('keydown', e=>{ if(!lb.classList.contains('open')) return; if(e.key==='Escape') close(); if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev(); });
-});
-</script>
+
+
+
 <script>
 (function() {
   var verified = false;
   var tokenValue = null;
-  window.onTurnstileSuccess = function(token) { 
-    verified = true; 
-    tokenValue = token;
-    toggleInputs(true);
-  };
-  window.onTurnstileExpired = function() {
-    verified = false;
-    tokenValue = null;
-    toggleInputs(false);
-  };
+
+  window.onTurnstileSuccess = function(token){ verified = true; tokenValue = token; toggleInputs(true); };
+  window.onTurnstileExpired = function(){ verified = false; tokenValue = null; toggleInputs(false); };
+
   function toggleInputs(enable){
     var form = document.getElementById("ahc-contact-form");
     if(!form) return;
@@ -213,32 +142,24 @@ document.addEventListener('DOMContentLoaded', function(){
     if(enable){ form.classList.remove("disabled"); }
     else { form.classList.add("disabled"); }
   }
-      else { el.setAttribute("disabled","disabled"); el.classList.add("disabled"); }
-    });
-  }
-  document.addEventListener("DOMContentLoaded", function() {
+
+  function setup(){
     var form = document.getElementById("ahc-contact-form");
     if(!form) return;
     var status = document.getElementById("form-status");
     var thanks = document.getElementById("thankyou-message");
-    // Disable inputs until captcha verified
-    toggleInputs(false);
 
-    form.addEventListener("submit", function(ev) {
+    // Ensure disabled state until verified
+    toggleInputs(verified);
+
+    form.addEventListener("submit", function(ev){
       ev.preventDefault();
 
-      // honeypot
       var hp = form.querySelector("input[name='company']");
-      if (hp && hp.value.trim().length > 0) { 
-        if(status) status.textContent="Submission blocked by anti-spam checks."; 
-        return;
-      }
-      if (!verified) { 
-        if(status) status.textContent="Please complete the security check (I'm not a robot)."; 
-        return; 
-      }
+      if (hp && hp.value.trim().length > 0) { if(status) status.textContent="Submission blocked by anti-spam checks."; return; }
+      if (!verified) { if(status) status.textContent="Please complete the security check (I'm not a robot)."; return; }
 
-      if(status) status.textContent="Sending…";
+      if(status) status.textContent = "Sending…";
 
       var data = {
         name: form.name.value.trim(),
@@ -250,9 +171,8 @@ document.addEventListener('DOMContentLoaded', function(){
         "cf-turnstile-response": tokenValue
       };
 
-      // Basic front-end validation
       if(!data.name || !data.from_email || !data.subject || !data.message){
-        if(status) status.textContent="Please complete all required fields.";
+        if(status) status.textContent = "Please complete all required fields.";
         return;
       }
 
@@ -262,26 +182,30 @@ document.addEventListener('DOMContentLoaded', function(){
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(data)
-      })
-      .then(function(r){ return r.json(); })
-      .then(function(resp){
-        // Remove form and show success
-        form.parentNode.removeChild(form);
-        if (thanks) {
+      }).then(function(r){
+        // Formspree returns 200/OK even with json body; parse safely:
+        return r.json().catch(function(){ return { ok: r.ok }; });
+      }).then(function(resp){
+        form.remove();
+        if(thanks){
           thanks.style.display = "block";
-          if(resp && resp.ok){
-            thanks.textContent = "Thanks! Your message has been sent successfully. I'll get back to you shortly.";
-          } else {
-            thanks.textContent = "Thanks — your message was submitted. If you don't receive a reply, please email me directly.";
-          }
+          thanks.textContent = (resp && resp.ok) ?
+            "Thanks! Your message has been sent successfully. I'll get back to you shortly." :
+            "Thanks — your message was submitted. If you don't receive a reply, please email me directly.";
         }
-        if(status){ status.textContent = ""; }
-      })
-      .catch(function(err){
+        if(status) status.textContent = "";
+      }).catch(function(){
         if(status) status.textContent = "Something went wrong sending your message. Please try again or email me directly.";
       });
-    });
-  });
+    }, { passive: false });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setup);
+  } else {
+    setup();
+  }
 })();
 </script>
+
 </html>
