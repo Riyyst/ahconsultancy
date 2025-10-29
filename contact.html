@@ -40,7 +40,7 @@ textarea{resize:none;overflow:auto}
   font-size: 16px;
 }
 
-</style> <script async="" defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+</style> <script async="" defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=cfTsReady&render=explicit"></script>
 </head><header class="top">
 <div class="wrap top-inner">
 <a class="brand" href="index.html">
@@ -60,7 +60,7 @@ textarea{resize:none;overflow:auto}
 <p><a class="btn" href="https://cal.com/adrian.headley/10min" rel="noopener" target="_blank">Book time to have a call</a></p>
 <div class="or-sep"><span class="muted">or</span></div>
 <h2>Send me an email</h2>
-<div id="turnstile-widget" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-appearance="interaction-only" style="margin:0.75rem 0;text-align:center;"></div>
+<div id="turnstile-widget" style="display:block;margin:0.75rem auto;text-align:center" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-appearance="interaction-only" style="margin:0.75rem 0;text-align:center;"></div>
 <form id="ahc-contact-form" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;" class="disabled">
 <label>Full name <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
 <input name="name" placeholder="Full name" required type="text" disabled/>
@@ -208,4 +208,23 @@ textarea{resize:none;overflow:auto}
 })();
 </script>
 
+<script>
+function cfTsReady(){
+  try{
+    var el = document.getElementById('turnstile-widget');
+    if(el && window.turnstile){
+      // Only render if not already rendered
+      if(!el.dataset.rendered){
+        window.turnstile.render(el, {
+          sitekey: el.getAttribute('data-sitekey'),
+          callback: 'onTurnstileSuccess',
+          'expired-callback': 'onTurnstileExpired',
+          appearance: 'interaction-only'
+        });
+        el.dataset.rendered = "1";
+      }
+    }
+  }catch(e){ console.error('Turnstile render error:', e); }
+}
+</script>
 </html>
