@@ -26,8 +26,7 @@ textarea{resize:none;overflow:auto}
 .reviews .rev-prev{left:8px}.reviews .rev-next{right:8px}
 
 /* === Contact form hardening (Mk74) === */
-#ahc-contact-form.disabled,
-#ahc-contact-form.disabled * { cursor: not-allowed !important; }
+
 #ahc-contact-form input,
 #ahc-contact-form textarea,
 #ahc-contact-form select { font-family: inherit; }
@@ -61,24 +60,24 @@ textarea{resize:none;overflow:auto}
 <div class="or-sep"><span class="muted">or</span></div>
 <h2>Send me an email</h2>
 
-<form id="ahc-contact-form" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;" class="disabled">
+<form id="ahc-contact-form" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;">
 <label>Full name <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<input name="name" placeholder="Full name" required type="text" disabled/>
+<input name="name" placeholder="Full name" required type="text"/>
 
 <label>Business/Organisation name</label>
-<input name="organisation" placeholder="Business/Organisation (optional)" type="text" disabled/>
+<input name="organisation" placeholder="Business/Organisation (optional)" type="text"/>
 
 <label>Email <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<input name="from_email" placeholder="you@company.com" required type="email" disabled/>
+<input name="from_email" placeholder="you@company.com" required type="email"/>
 
 <label>Phone number</label>
-<input name="phone" placeholder="Phone number (optional)" type="tel" disabled/>
+<input name="phone" placeholder="Phone number (optional)" type="tel"/>
 
 <div aria-hidden="true" style="height:8px"></div>
 
 <label>Subject <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<select name="subject" required disabled style="width:100%;border-radius:12px;border:4px solid rgba(191,161,57,.55);background:rgba(255,255,255,.75);padding:12px 14px;font-size:16px;outline:none">
-  <option value="" disabled selected>Select a subject</option>
+<select name="subject" required style="width:100%;border-radius:12px;border:4px solid rgba(191,161,57,.55);background:rgba(255,255,255,.75);padding:12px 14px;font-size:16px;outline:none">
+  <option value="" selected>Select a subject</option>
   <option>Process Tools</option>
   <option>Small Website Setup</option>
   <option>Social Media</option>
@@ -89,9 +88,9 @@ textarea{resize:none;overflow:auto}
 </select>
 
 <label>Message <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<textarea name="message" placeholder="Tell me what you’d like to achieve…" rows="8" required disabled style="font-size:16px"></textarea>
+<textarea name="message" placeholder="Tell me what you’d like to achieve…" rows="8" required style="font-size:16px"></textarea>
 
-<button class="btn" type="submit" disabled>Send</button>
+<button class="btn" type="submit">Send</button>
 <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;">
   <label>Company <input autocomplete="off" name="company" tabindex="-1" type="text"/></label>
 </div>
@@ -119,4 +118,50 @@ textarea{resize:none;overflow:auto}
 </div>
 </div>
 
+<script>
+(function(){
+  function setup(){
+    var form = document.getElementById("ahc-contact-form");
+    if(!form) return;
+    var status = document.getElementById("form-status");
+    var thanks = document.getElementById("thankyou-message");
+    form.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      if(status) status.textContent = "Sending…";
+      var data = {
+        name: form.name?.value?.trim() || "",
+        organisation: form.organisation?.value?.trim() || "",
+        from_email: form.from_email?.value?.trim() || "",
+        phone: form.phone?.value?.trim() || "",
+        subject: form.subject?.value || "",
+        message: form.message?.value?.trim() || ""
+      };
+      var action = form.getAttribute("action");
+      fetch(action, {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      }).then(function(r){
+        return r.json().catch(function(){ return { ok: r.ok }; });
+      }).then(function(resp){
+        form.remove();
+        if(thanks){
+          thanks.style.display = "block";
+          thanks.textContent = (resp && resp.ok) ?
+            "Thanks! Your message has been sent successfully. I'll get back to you shortly." :
+            "Thanks — your message was submitted. If you don't receive a reply, please email me directly.";
+        }
+        if(status) status.textContent = "";
+      }).catch(function(){
+        if(status) status.textContent = "Something went wrong sending your message. Please try again or email me directly.";
+      });
+    }, { passive: false });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setup);
+  } else {
+    setup();
+  }
+})();
+</script>
 </html>
