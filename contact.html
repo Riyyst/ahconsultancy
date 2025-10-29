@@ -40,27 +40,6 @@ textarea{resize:none;overflow:auto}
   font-size: 16px;
 }
 
-
-/* === Lightweight gate styles === */
-#ahc-contact-form.disabled, #ahc-contact-form.disabled * { cursor: not-allowed !important; }
-#ahc-contact-form .btn { width:100%; display:block; border:4px solid rgba(191,161,57,.55); border-radius:12px; padding:12px 14px; font-size:16px; }
-#ahc-contact-form input, #ahc-contact-form textarea, #ahc-contact-form select { font-family: inherit; }
-
-
-/* === Lightweight Anti-Bot gating === */
-#ahc-contact-form.disabled,
-#ahc-contact-form.disabled * { cursor: not-allowed !important; }
-#ahc-contact-form .btn {
-  width: 100%;
-  display: block;
-  border: 4px solid rgba(191,161,57,.55);
-  border-radius: 12px;
-  padding: 12px 14px;
-  font-size: 16px;
-}
-#ahc-contact-form input,
-#ahc-contact-form textarea,
-#ahc-contact-form select { font-family: inherit; }
 </style> 
 </head><header class="top">
 <div class="wrap top-inner">
@@ -81,36 +60,24 @@ textarea{resize:none;overflow:auto}
 <p><a class="btn" href="https://cal.com/adrian.headley/10min" rel="noopener" target="_blank">Book time to have a call</a></p>
 <div class="or-sep"><span class="muted">or</span></div>
 <h2>Send me an email</h2>
-<div class="robot-check" style="margin:0.75rem auto 0.25rem;max-width:640px;text-align:left;">
-  <label style="display:flex;gap:10px;align-items:center;">
-    <input id="robot-ok" type="checkbox" style="width:18px;height:18px"/>
-    <span>I'm not a robot</span>
-  </label>
-</div>
-<div id="human-gate" class="gate" style="margin:0.75rem auto 0.5rem;max-width:640px;text-align:left;">
-  <label style="display:flex;align-items:center;gap:10px;user-select:none;cursor:pointer;">
-    <input id="human-check" type="checkbox" style="width:20px;height:20px">
-    <span>I'm not a robot</span>
-  </label>
-</div>
 
-<form id="ahc-contact-form" class="disabled" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;" class="disabled" class="disabled">
+<form id="ahc-contact-form" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;" class="disabled">
 <label>Full name <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<input disabled name="name" placeholder="Full name" required type="text" disabled/ disabled>
+<input name="name" placeholder="Full name" required type="text" disabled/>
 
 <label>Business/Organisation name</label>
-<input disabled name="organisation" placeholder="Business/Organisation (optional)" type="text" disabled/ disabled>
+<input name="organisation" placeholder="Business/Organisation (optional)" type="text" disabled/>
 
 <label>Email <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<input disabled name="from_email" placeholder="you@company.com" required type="email" disabled/ disabled>
+<input name="from_email" placeholder="you@company.com" required type="email" disabled/>
 
 <label>Phone number</label>
-<input disabled name="phone" placeholder="Phone number (optional)" type="tel" disabled/ disabled>
+<input name="phone" placeholder="Phone number (optional)" type="tel" disabled/>
 
 <div aria-hidden="true" style="height:8px"></div>
 
 <label>Subject <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<select disabled name="subject" required disabled style="width:100%;border-radius:12px;border:4px solid rgba(191,161,57,.55);background:rgba(255,255,255,.75);padding:12px 14px;font-size:16px;outline:none" disabled>
+<select name="subject" required disabled style="width:100%;border-radius:12px;border:4px solid rgba(191,161,57,.55);background:rgba(255,255,255,.75);padding:12px 14px;font-size:16px;outline:none">
   <option value="" disabled selected>Select a subject</option>
   <option>Process Tools</option>
   <option>Small Website Setup</option>
@@ -122,11 +89,11 @@ textarea{resize:none;overflow:auto}
 </select>
 
 <label>Message <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<textarea disabled name="message" placeholder="Tell me what you’d like to achieve…" rows="8" required disabled style="font-size:16px" disabled></textarea>
+<textarea name="message" placeholder="Tell me what you’d like to achieve…" rows="8" required disabled style="font-size:16px"></textarea>
 
-<button disabled class="btn" type="submit" disabled>Send</button>
+<button class="btn" type="submit" disabled>Send</button>
 <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;">
-  <label>Company <input disabled autocomplete="off" name="company" tabindex="-1" type="text"/ disabled></label>
+  <label>Company <input autocomplete="off" name="company" tabindex="-1" type="text"/></label>
 </div>
 </form>
 <div id="thankyou-message" aria-live="polite" style="display:none;margin-top:1rem;font-weight:600;"></div>
@@ -152,92 +119,4 @@ textarea{resize:none;overflow:auto}
 </div>
 </div>
 
-
-
-
-<script>
-(function(){
-  function toggleInputs(enable){
-    var form = document.getElementById("ahc-contact-form");
-    if(!form) return;
-    var fields = form.querySelectorAll("input, textarea, select, button[type='submit']");
-    fields.forEach(function(el){
-      if(enable){ el.removeAttribute("disabled"); el.classList.remove("disabled"); }
-      else { if(el.type !== 'hidden') el.setAttribute("disabled","disabled"); el.classList.add("disabled"); }
-    });
-    if(enable){ form.classList.remove("disabled"); }
-    else { form.classList.add("disabled"); }
-  }
-
-  function setup(){
-    var form = document.getElementById("ahc-contact-form");
-    if(!form) return;
-    var status = document.getElementById("form-status");
-    var thanks = document.getElementById("thankyou-message");
-    var robot = document.getElementById("robot-ok");
-
-    // start locked
-    toggleInputs(false);
-
-    // unlock when checkbox is checked
-    if(robot){
-      robot.addEventListener('change', function(){
-        toggleInputs(robot.checked);
-        if(!robot.checked && status){ status.textContent = "Please confirm you're not a robot."; }
-        else if(status){ status.textContent = ""; }
-      });
-    }
-
-    form.addEventListener("submit", function(ev){
-      ev.preventDefault();
-      if(robot && !robot.checked){
-        if(status) status.textContent = "Please confirm you're not a robot.";
-        return;
-      }
-      var hp = form.querySelector("input[name='company']");
-      if (hp && hp.value.trim().length > 0) { if(status) status.textContent="Submission blocked by anti-spam checks."; return; }
-
-      if(status) status.textContent = "Sending…";
-
-      var data = {
-        name: form.name.value.trim(),
-        organisation: form.organisation ? form.organisation.value.trim() : "",
-        from_email: form.from_email.value.trim(),
-        phone: form.phone.value.trim(),
-        subject: form.subject.value,
-        message: form.message.value.trim()
-      };
-      if(!data.name || !data.from_email || !data.subject || !data.message){
-        if(status) status.textContent = "Please complete all required fields.";
-        return;
-      }
-      var action = form.getAttribute("action");
-      fetch(action, {
-        method: "POST",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      }).then(function(r){
-        return r.json().catch(function(){ return { ok: r.ok }; });
-      }).then(function(resp){
-        form.remove();
-        if(thanks){
-          thanks.style.display = "block";
-          thanks.textContent = (resp && resp.ok) ?
-            "Thanks! Your message has been sent successfully. I'll get back to you shortly." :
-            "Thanks — your message was submitted. If you don't receive a reply, please email me directly.";
-        }
-        if(status) status.textContent = "";
-      }).catch(function(){
-        if(status) status.textContent = "Something went wrong sending your message. Please try again or email me directly.";
-      });
-    }, { passive: false });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setup);
-  } else {
-    setup();
-  }
-})();
-</script>
 </html>
