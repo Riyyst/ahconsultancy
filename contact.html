@@ -60,7 +60,8 @@ textarea{resize:none;overflow:auto}
 <p><a class="btn" href="https://cal.com/adrian.headley/10min" rel="noopener" target="_blank">Book time to have a call</a></p>
 <div class="or-sep"><span class="muted">or</span></div>
 <h2>Send me an email</h2>
-<div id="turnstile-widget" style="display:block;margin:0.75rem auto;text-align:center" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-appearance="interaction-only" style="margin:0.75rem 0;text-align:center;"></div>
+<div id="turnstile-widget" style="min-height:70px; display:block;margin:0.75rem auto;text-align:center" class="cf-challenge" data-sitekey="0x4AAAAAAB8fQUXnJzV4o9LR" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-appearance="interaction-only" style="margin:0.75rem 0;text-align:center;"></div>
+<noscript><div class="muted" style="margin:.5rem 0;">Please enable JavaScript to complete the security check.</div></noscript>
 <form id="ahc-contact-form" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;" class="disabled">
 <label>Full name <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
 <input name="name" placeholder="Full name" required type="text" disabled/>
@@ -213,8 +214,39 @@ function cfTsReady(){
   try{
     var el = document.getElementById('turnstile-widget');
     if(el && window.turnstile){
-      // Only render if not already rendered
       if(!el.dataset.rendered){
+        window.turnstile.render(el, {
+          sitekey: el.getAttribute('data-sitekey'),
+          callback: function(token){ if(window.onTurnstileSuccess) window.onTurnstileSuccess(token); },
+          'expired-callback': function(){ if(window.onTurnstileExpired) window.onTurnstileExpired(); },
+          appearance: 'always'
+        });
+        el.dataset.rendered = "1";
+      }
+    }
+  }catch(e){ console.error('Turnstile render error:', e); }
+});
+        el.dataset.rendered = "1";
+      }
+    }
+  }catch(e){ console.error('Turnstile render error:', e); }
+}
+</script>
+<script>
+(function(){
+  // After 4s, if Turnstile hasn't loaded/rendered, show a visible error and keep form disabled.
+  function showCFError(msg){
+    var status = document.getElementById("form-status");
+    if(status){ status.textContent = msg; }
+    var widget = document.getElementById("turnstile-widget");
+    if(widget){ widget.innerHTML = '<div class="muted" style="color:#b00">Security check failed to load. Please disable blockers and refresh.</div>'; }
+  }
+  function ensureRendered(){
+    try{
+      var el = document.getElementById('turnstile-widget');
+      if(!el) return;
+      if(el.dataset.rendered === "1") return;
+      if(window.turnstile){
         window.turnstile.render(el, {
           sitekey: el.getAttribute('data-sitekey'),
           callback: 'onTurnstileSuccess',
@@ -223,8 +255,25 @@ function cfTsReady(){
         });
         el.dataset.rendered = "1";
       }
+    }catch(e){ /* swallow */ }
+  }
+  // Check a few times
+  var attempts = 0;
+  var iv = setInterval(function(){
+    attempts++; ensureRendered();
+    if((window.turnstile && document.getElementById('turnstile-widget')?.dataset.rendered==="1") || attempts>10){
+      clearInterval(iv);
+      if(attempts>10 && !window.turnstile){
+        showCFError("Security check failed to load. Please disable blockers and refresh.");
+      }
     }
-  }catch(e){ console.error('Turnstile render error:', e); }
-}
+  }, 400);
+  // Final hard timeout
+  setTimeout(function(){
+    if(!window.turnstile){
+      showCFError("Security check failed to load. Please disable blockers and refresh.");
+    }
+  }, 4000);
+})();
 </script>
 </html>
