@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+
+<html lang="en"><head><meta content="default-src 'self'; base-uri 'self'; form-action 'self' https://formspree.io; connect-src 'self' https://formspree.io; img-src 'self' data:; object-src 'none'; script-src 'self' 'sha256-AthBRllCP+fSWi0sx392qfsM3MgzLXSrMZjpEVpYiPA='; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; upgrade-insecure-requests;" http-equiv="Content-Security-Policy"/><meta content="no-referrer" name="referrer"/><style id="anti-clickjack">body{display:none !important;}</style><script>
+if (self === top) {
+  var s = document.getElementById('anti-clickjack'); if (s) s.remove();
+} else {
+  try { top.location = self.location; } catch(e) {}
+}
+</script>
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>AH Consultancy</title><link href="Media/logo.png" rel="icon"/><link href="styles.css" rel="stylesheet"/><link href="responsive.css" rel="stylesheet"/><style>
 /* === FIXES (anchor offset, padding, borders, promo, pointers) === */
@@ -76,7 +83,6 @@ textarea{resize:none;overflow:auto}
 
 -->
 <!-- Reviews header END -->
-
 <div class="rev-viewport">
 <button class="rev-ctrl rev-prev">‹</button>
 <button class="rev-ctrl rev-next">›</button>
@@ -169,7 +175,6 @@ textarea{resize:none;overflow:auto}
 
 -->
 <!-- Placeholder Review END — Review #10 of 10 -->
-
 <!-- Placeholder Review START — Index — Review #9 of 10 -->
 <!--
 <article class="rev active" data-placeholder="true" data-seq="9">
@@ -192,7 +197,6 @@ textarea{resize:none;overflow:auto}
 
 -->
 <!-- Placeholder Review END — Review #9 of 10 -->
-
 <!-- Placeholder Review START — Index — Review #8 of 10 -->
 <!--
 <article class="rev active" data-placeholder="true" data-seq="8">
@@ -215,7 +219,6 @@ textarea{resize:none;overflow:auto}
 
 -->
 <!-- Placeholder Review END — Review #8 of 10 -->
-
 <!-- Placeholder Review START — Index — Review #7 of 10 -->
 <!--
 <article class="rev active" data-placeholder="true" data-seq="7">
@@ -238,7 +241,6 @@ textarea{resize:none;overflow:auto}
 
 -->
 <!-- Placeholder Review END — Review #7 of 10 -->
-
 <!-- Placeholder Review START — Index — Review #6 of 10 -->
 <!--
 <article class="rev active" data-placeholder="true" data-seq="6">
@@ -261,7 +263,6 @@ textarea{resize:none;overflow:auto}
 
 -->
 <!-- Placeholder Review END — Review #6 of 10 -->
-
 <!-- Placeholder Review START — Index — Review #5 of 10 -->
 <!--
 <article class="rev active" data-placeholder="true" data-seq="5">
@@ -284,7 +285,6 @@ textarea{resize:none;overflow:auto}
 
 -->
 <!-- Placeholder Review END — Review #5 of 10 -->
-
 <!-- Placeholder Review START — Index — Review #4 of 10 -->
 <!--
 <article class="rev active" data-placeholder="true" data-seq="4">
@@ -307,7 +307,6 @@ textarea{resize:none;overflow:auto}
 
 -->
 <!-- Placeholder Review END — Review #4 of 10 -->
-
 </div>
 </div>
 <p style="margin-top:18px"></p>
@@ -318,8 +317,8 @@ textarea{resize:none;overflow:auto}
 <small>© 2025 Adrian Headley</small>
 <ul class="icons">
 <li><a class="icon-btn" href="contact.html" title="Email">✉</a></li>
-<li><a class="icon-btn" href="https://www.linkedin.com" target="_blank">in</a></li>
-<li><a class="icon-btn" href="https://x.com" target="_blank">𝕏</a></li>
+<li><a class="icon-btn" href="https://www.linkedin.com" rel="noopener noreferrer" target="_blank">in</a></li>
+<li><a class="icon-btn" href="https://x.com" rel="noopener noreferrer" target="_blank">𝕏</a></li>
 </ul>
 </div>
 </footer>
@@ -332,7 +331,6 @@ textarea{resize:none;overflow:auto}
 <div class="lb-media"></div>
 </div>
 </div>
-
 <script>
 (function(){
   const promo = document.getElementById('promo');
