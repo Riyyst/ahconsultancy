@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+<html lang="en"><head><script>
+if (self !== top) {
+  try { top.location = self.location; } catch (e) { self.location = self.location; }
+}
+</script><meta content="no-referrer" name="referrer"/><meta content="default-src 'self'; base-uri 'self'; form-action 'self' https://formspree.io; connect-src 'self' https://formspree.io; img-src 'self' data:; object-src 'none'; script-src 'self' 'sha256-dTLbV/1TCd4UVKBdikiOljc5H/Hj375hsdxMIVYLuTE='; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; upgrade-insecure-requests;" http-equiv="Content-Security-Policy"/><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Contact — AH Consultancy</title><link href="Media/logo.png" rel="icon"/><link href="styles.css" rel="stylesheet"/><link href="responsive.css" rel="stylesheet"/><style>
 /* === FIXES (anchor offset, padding, borders, promo, pointers) === */
 #services{scroll-margin-top:120px}
@@ -39,7 +44,7 @@ textarea{resize:none;overflow:auto}
   font-size: 16px;
 }
 
-</style> 
+</style>
 </head><header class="top">
 <div class="wrap top-inner">
 <a class="brand" href="index.html">
@@ -56,46 +61,38 @@ textarea{resize:none;overflow:auto}
 <main class="wrap section" style="text-align:center;">
 <h1>Choose how you wish to reach out to me</h1>
 <p class="muted">Pick what’s easiest — book time or send me a quick note.</p>
-<p><a class="btn" href="https://cal.com/adrian.headley/10min" rel="noopener" target="_blank">Book time to have a call</a></p>
+<p><a class="btn" href="https://cal.com/adrian.headley/10min" rel="noopener noreferrer" target="_blank">Book time to have a call</a></p>
 <div class="or-sep"><span class="muted">or</span></div>
 <h2>Send me an email</h2>
-
-<form id="ahc-contact-form" action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" method="POST" style="max-width:640px;margin:0 auto;text-align:left;">
+<form action="https://formspree.io/f/xyznrqqn" class="form" enctype="text/plain" id="ahc-contact-form" method="POST" style="max-width:640px;margin:0 auto;text-align:left;">
 <label>Full name <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<input name="name" placeholder="Full name" required type="text"/>
-
+<input name="name" placeholder="Full name" required="" type="text"/>
 <label>Business/Organisation name</label>
 <input name="organisation" placeholder="Business/Organisation (optional)" type="text"/>
-
 <label>Email <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<input name="from_email" placeholder="you@company.com" required type="email"/>
-
+<input name="from_email" placeholder="you@company.com" required="" type="email"/>
 <label>Phone number</label>
 <input name="phone" placeholder="Phone number (optional)" type="tel"/>
-
 <div aria-hidden="true" style="height:8px"></div>
-
 <label>Subject <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<select name="subject" required style="width:100%;border-radius:12px;border:4px solid rgba(191,161,57,.55);background:rgba(255,255,255,.75);padding:12px 14px;font-size:16px;outline:none">
-  <option value="" selected>Select a subject</option>
-  <option>Process Tools</option>
-  <option>Small Website Setup</option>
-  <option>Social Media</option>
-  <option>Data Insights</option>
-  <option>Copywriting</option>
-  <option>Business Documents</option>
-  <option>Other</option>
+<select name="subject" required="" style="width:100%;border-radius:12px;border:4px solid rgba(191,161,57,.55);background:rgba(255,255,255,.75);padding:12px 14px;font-size:16px;outline:none">
+<option selected="" value="">Select a subject</option>
+<option>Process Tools</option>
+<option>Small Website Setup</option>
+<option>Social Media</option>
+<option>Data Insights</option>
+<option>Copywriting</option>
+<option>Business Documents</option>
+<option>Other</option>
 </select>
-
 <label>Message <span aria-hidden="true" style="color:#e11;font-weight:600">*</span></label>
-<textarea name="message" placeholder="Tell me what you’d like to achieve…" rows="8" required style="font-size:16px"></textarea>
-
+<textarea name="message" placeholder="Tell me what you’d like to achieve…" required="" rows="8" style="font-size:16px"></textarea>
 <button class="btn" type="submit">Send</button>
 <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;">
-  <label>Company <input autocomplete="off" name="company" tabindex="-1" type="text"/></label>
+<label>Company <input autocomplete="off" name="company" tabindex="-1" type="text"/></label>
 </div>
 </form>
-<div id="thankyou-message" aria-live="polite" style="display:none;margin-top:1rem;font-weight:600;"></div>
+<div aria-live="polite" id="thankyou-message" style="display:none;margin-top:1rem;font-weight:600;"></div>
 <div aria-live="polite" id="form-status" style="margin-top:1rem;"></div>
 </main>
 <footer class="site-foot">
@@ -103,8 +100,8 @@ textarea{resize:none;overflow:auto}
 <small>© 2025 Adrian Headley</small>
 <ul class="icons">
 <li><a class="icon-btn" href="contact.html" title="Email">✉</a></li>
-<li><a class="icon-btn" href="https://www.linkedin.com" target="_blank">in</a></li>
-<li><a class="icon-btn" href="https://x.com" target="_blank">𝕏</a></li>
+<li><a class="icon-btn" href="https://www.linkedin.com" rel="noopener noreferrer" target="_blank">in</a></li>
+<li><a class="icon-btn" href="https://x.com" rel="noopener noreferrer" target="_blank">𝕏</a></li>
 </ul>
 </div>
 </footer>
@@ -117,7 +114,6 @@ textarea{resize:none;overflow:auto}
 <div class="lb-media"></div>
 </div>
 </div>
-
 <script>
 (function(){
   function setup(){
