@@ -1,8 +1,83 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>AH Consultancy</title><link href="Media/logo.png" rel="icon"/><link href="styles.css" rel="stylesheet"/><link href="responsive.css" rel="stylesheet"/><style>
-/* === FIXES (anchor offset, padding, borders, promo, pointers) === */
+<html lang="en">
+<head>
+<!-- ==========================  Analytics (Google tag)  ========================== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y6HF2FC60S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Y6HF2FC60S');
+</script>
+
+<!-- ==========================  SEO  ========================== -->
+<meta name="description" content="I build small improvement tools , craft clean websites , manage social media , write copywriting , ship custom templates , and turn data into clarity." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://www.ahconsultancy.uk/index.html" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="AH Consultancy" />
+<meta property="og:description" content="I build small improvement tools , craft clean websites , manage social media , write copywriting , ship custom templates , and turn data into clarity." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="Media/logo.png" />
+<meta property="og:site_name" content="AH Consultancy" />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:url" content="https://www.ahconsultancy.uk/index.html" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AH Consultancy" />
+<meta name="twitter:description" content="I build small improvement tools , craft clean websites , manage social media , write copywriting , ship custom templates , and turn data into clarity." />
+<meta name="twitter:image" content="Media/logo.png" />
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "AH Consultancy",
+      "url": "https://www.ahconsultancy.uk/",
+      "logo": "https://www.ahconsultancy.uk/Mk79/Media/logo.png"
+    },
+    {
+      "@type": "WebSite",
+      "name": "AH Consultancy",
+      "url": "https://www.ahconsultancy.uk/",
+      "inLanguage": "en-GB",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.ahconsultancy.uk/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "name": "AH Consultancy",
+      "description": "I build small improvement tools , craft clean websites , manage social media , write copywriting , ship custom templates , and turn data into clarity.",
+      "inLanguage": "en-GB",
+      "url": "https://www.ahconsultancy.uk/index.html",
+      "isPartOf": {
+        "@id": "https://www.ahconsultancy.uk/#website"
+      }
+    }
+  ]
+}
+</script>
+
+  
+  <meta charset="utf-8"/>
+
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>AH Consultancy</title>
+<link href="Media/logo.png" rel="icon"/>
+
+  <link href="styles.css" rel="stylesheet"/>
+
+  <link href="responsive.css" rel="stylesheet"/>
+<style>
+
 #services{scroll-margin-top:120px}
 .tile{padding:12px}
 .form input,.form textarea{border:4px solid rgba(191,161,57,.55);border-radius:12px;background:rgba(255,255,255,.75)}
@@ -10,7 +85,7 @@ textarea{resize:none;overflow:auto}
 .promo{width:100vw;margin-left:calc(50% - 50vw);z-index:50}
 .top{z-index:60}
 .hero-preview,.preview,.overlay{pointer-events:none}
-/* === Lightbox styles === */
+
 .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);padding:24px;z-index:9999}
 .lightbox.open{display:flex}
 .lb-inner{position:relative;background:#fff;border-radius:16px;box-shadow:0 24px 64px rgba(0,0,0,.3);max-width:min(980px,92vw);width:100%;padding:16px}
@@ -18,16 +93,17 @@ textarea{resize:none;overflow:auto}
 .lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:4px solid rgba(191,161,57,.55);border-radius:12px;width:48px;height:48px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);font-size:28px;line-height:1}
 .lb-prev{left:12px}.lb-next{right:12px}
 .lb-close{position:absolute;top:10px;right:14px;background:#fff;border:4px solid rgba(191,161,57,.55);border-radius:10px;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);font-size:22px;line-height:1}
-/* === Reviews viewport === */
+
 .reviews .rev-viewport{position:relative;overflow:hidden;padding:0 60px}
 .reviews .rev-track{display:flex;gap:24px;transition:transform .5s ease}
 .reviews .rev{flex:0 0 72%;background:rgba(255,255,255,.66);border:4px solid rgba(191,161,57,.55);border-radius:16px;padding:18px;box-shadow:0 12px 32px rgba(16,24,40,.08);opacity:.55;transform:scale(.96);transition:opacity .3s,transform .3s}
 .reviews .rev.active{opacity:1;transform:scale(1)}
 .reviews .rev-ctrl{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:4px solid rgba(191,161,57,.55);width:44px;height:44px;border-radius:12px;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 32px rgba(16,24,40,.12);z-index:2}
 .reviews .rev-prev{left:8px}.reviews .rev-next{right:8px}
+
 </style></head><div class="promo" id="promo">
 <div class="promo-bar wrap">
-<span class="promo-msg">✨ Limited slots this month — intro offer on Small Site builds.</span>
+<span class="promo-msg">✨ Intro offer on Small Site builds! Get in contact to find out more!</span>
 </div>
 </div>
 <header class="top">
@@ -52,9 +128,11 @@ textarea{resize:none;overflow:auto}
 <a class="btn" href="index.html#services">What I can do for you</a>
 </div>
 </section>
-<!-- Divider Line START — below Business Documents (commented out since reviews are hidden) -->
+
+<!-- Divider Line START — (below Business Documents) -->
 <!-- <div class="divider"></div> -->
-<!-- Divider Line END — uncomment to restore -->
+<!-- Divider Line END -->
+
 <section class="section" id="services">
 <h2>Services (at a glance)</h2>
 <div class="grid g3">
@@ -66,22 +144,28 @@ textarea{resize:none;overflow:auto}
 <a class="tile" href="service-business-documents.html"><h3>Business Documents</h3><p>Contracts, policies, workflows.</p></a>
 </div>
 </section>
+
 <!-- Divider Line START — below Business Documents (commented out since reviews are hidden) -->
 <!-- <div class="divider"></div> -->
-<!-- Divider Line END — uncomment to restore -->
+<!-- Divider Line END -->
+
 <section class="section reviews">
+
 <!-- Reviews header START -->
+
 <!--
 <h2>Reviews</h2>
-
 -->
+
 <!-- Reviews header END -->
 
 <div class="rev-viewport">
 <button class="rev-ctrl rev-prev">‹</button>
 <button class="rev-ctrl rev-next">›</button>
 <div class="rev-track">
-<!-- Existing Review START — Index — Original #1 -->
+
+<!-- Existing Review START -->
+
 <!--
 <article class="rev active" data-placeholder="true" data-seq="1">
  <h4>
@@ -306,7 +390,8 @@ textarea{resize:none;overflow:auto}
 </article>
 
 -->
-<!-- Placeholder Review END — Review #4 of 10 -->
+
+<!-- Placeholder Review END -->
 
 </div>
 </div>
@@ -315,16 +400,16 @@ textarea{resize:none;overflow:auto}
 </main>
 <footer class="site-foot">
 <div class="wrap foot-grid">
-<small>© 2025 Adrian Headley</small>
+<small>© 2025 AH Consultancy</small>
 <ul class="icons">
 <li><a class="icon-btn" href="contact.html" title="Email">✉</a></li>
-<li><a class="icon-btn" href="https://www.linkedin.com" target="_blank">in</a></li>
-<li><a class="icon-btn" href="https://x.com" target="_blank">𝕏</a></li>
-</ul>
+<li><a class="icon-btn" href="https://www.linkedin.com/company/ahconsultancy" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="#0077B5" d="M19 0h-14C2.2 0 0 2.2 0 5v14c0 2.8 2.2 5 5 5h14c2.8 0 5-2.2 5-5V5c0-2.8-2.2-5-5-5zM8 20H5V9h3v11zM6.5 7.5A1.75 1.75 0 116.5 4a1.75 1.75 0 010 3.5zM20 20h-3v-5.5c0-1.3-.5-2.2-1.7-2.2s-2 1-2 2.3V20h-3V9h3v1.5c.7-.9 1.7-1.5 3-1.5 2.4 0 4 1.5 4 4.8V20z"/></svg></a></li>
+<li><a class="icon-btn" href="https://www.facebook.com/profile.php?id=61582083766356" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="#1877F2" d="M22.676 0H1.326A1.33 1.33 0 000 1.326v21.348C0 23.407.593 24 1.326 24H12.82v-9.294H9.691v-3.622h3.132V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.796.143v3.24h-1.92c-1.506 0-1.798.716-1.798 1.766v2.316h3.594l-.468 3.622h-3.126V24h6.127A1.33 1.33 0 0024 22.674V1.326A1.33 1.33 0 0022.676 0z"/></svg></a></li>
+<li><a class="icon-btn" href="#" target="_blank" aria-label="Google"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M533.5 278.4c0-17.7-1.4-35-4.1-51.8H272v98h146.9c-6.3 34-25.2 62.8-53.7 82.1v68h86.6c50.6-46.6 81.7-115.3 81.7-196.3z"/><path fill="#34A853" d="M272 544.3c72.7 0 133.8-24 178.4-65.2l-86.6-68c-24.1 16.2-55 25.7-91.8 25.7-70.6 0-130.4-47.6-151.8-111.5H30.1v70.3c44.1 87.3 134.8 148.7 241.9 148.7z"/><path fill="#FBBC05" d="M120.2 325.3c-10.3-30-10.3-62.6 0-92.6V162.4H30.1C-9.9 239.3-9.9 342 30.1 418.9l90.1-93.6z"/><path fill="#EA4335" d="M272 107.6c39.5 0 74.8 13.6 102.6 40.3l76.7-76.7C405.9 24 344.7 0 272 0 165 0 74.3 61.4 30.1 148.7l90.1 70.3C141.6 155.3 201.4 107.6 272 107.6z"/></svg></a></li></ul>
 </div>
 </footer>
 <script defer="" src="main.js"></script>
-<!-- Lightbox -->
+
 <div aria-hidden="true" class="lightbox">
 <div class="lb-inner">
 <button aria-label="Previous" class="lb-arrow lb-prev">‹</button>
