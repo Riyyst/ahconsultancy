@@ -357,3 +357,48 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
     transform: translateY(-50%) !important;
   }
 }
+
+/* Gold underline hover (used for name + inline links) */
+.gold-underline{
+  position:relative;
+  display:inline-block;
+  text-decoration:none;
+  color:inherit;
+  background:transparent;
+  padding:0;
+  margin:0;
+  border-radius:0;
+  font-weight:inherit;
+  box-shadow:none;
+  cursor:pointer;
+  padding-bottom:2px;
+}
+.gold-underline::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:4px; /* thicker underline */
+  background:var(--gold);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .28s ease;
+  border-radius:999px;
+}
+.gold-underline:hover::after,
+.gold-underline:focus-visible::after{
+  transform:scaleX(1);
+}
+
+
+/* Static gold underline (no animation) */
+.static-gold-underline{
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 2px;
+}
+.static-gold-underline::after{ content:none !important; }
+.static-gold-underline:hover::after,
+.static-gold-underline:focus-visible::after{ content:none !important; }
