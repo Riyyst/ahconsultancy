@@ -402,3 +402,26 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
 .static-gold-underline::after{ content:none !important; }
 .static-gold-underline:hover::after,
 .static-gold-underline:focus-visible::after{ content:none !important; }
+
+
+
+
+
+/* Footer social column (icons + privacy link stacked) */
+.footer-social-col{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+}
+
+.footer-privacy-link{
+  margin-top:0.4rem;
+}
+
+.footer-privacy{
+  font-size:0.8rem;
+  color:#000;
+  text-decoration:none;
+  border-bottom:2px solid #c9a24d;
+  padding-bottom:2px;
+}
