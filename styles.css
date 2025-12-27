@@ -418,7 +418,10 @@ main{flex:1} .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
   margin-top:0.4rem;
 }
 
-.footer-privacy{
+.footer-privacy,
+.footer-privacy:visited,
+.footer-privacy:hover,
+.footer-privacy:active{
   font-size:0.8rem;
   color:#000;
   text-decoration:none;
